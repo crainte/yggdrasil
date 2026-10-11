@@ -1,0 +1,34 @@
+replicas: 2
+minAvailable: 1
+config: |
+  workers: 2
+  logging:
+    groups: [manager, cache]
+    level: info
+  dnssec:
+    log-bogus: true
+  network:
+    do-ipv6: false
+    listen:
+      - interface: eth0@53
+  rate-limiting:
+    rate-limit: 768
+    dry-run: true
+  cache:
+    prefetch:
+      expiring: true
+overrides:
+  deployment/knot:
+    spec:
+      template:
+        spec:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    labelSelector:
+                      matchLabels:
+                        onigiri.dev/instance: knot-resolver
+                        onigiri.dev/workload: knot
+                    topologyKey: kubernetes.io/hostname

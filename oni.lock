@@ -1,0 +1,35 @@
+version: 14
+roots:
+  knot-resolver:
+    package: omusubiya-packages/knot-resolver
+    version: =6.5.0
+packages:
+  omusubiya-packages/knot-resolver:
+    version: 6.5.0
+    digest: sha256:0c7f64c3acbe9c103aa17a953500cb3da674e42cd16f651a89b63ba9fc8b88d6
+    dependencies: {}
+    runtime: {}
+    instance:
+      package: omusubiya-packages/knot-resolver
+      kind: root
+      scope: knot-resolver
+instances:
+  knot-resolver:
+    id:
+      package: omusubiya-packages/knot-resolver
+      kind: root
+      scope: knot-resolver
+    artifact:
+      package: omusubiya-packages/knot-resolver
+      version: 6.5.0
+      digest: sha256:0c7f64c3acbe9c103aa17a953500cb3da674e42cd16f651a89b63ba9fc8b88d6
+    runtime: {}
+platforms:
+  kubernetes:
+    '1.36':
+      digest: sha256:418d37e8684294965799119216abb35f0a8ecebfdafff854c9620442a61d75e5
+      source: onigiri-schema-registry
+images:
+  docker.io/cznic/knot-resolver:v6.5.0:
+    digest: sha256:b2422a58c6b6ab863f24f9e80f65677ae45dcbe0ed9474ced8cb32453f5c49e0
+    mediaType: application/vnd.oci.image.index.v1+json
