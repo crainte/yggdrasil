@@ -8,7 +8,7 @@ platforms:
 packages:
   knot-resolver:
     package: packages/knot-resolver
-    version: "=6.5.0"
+    version: "=6.5.1"
     namespace: dns
     createNamespace: true
     config: knot-resolver.yaml

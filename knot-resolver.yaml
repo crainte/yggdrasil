@@ -10,7 +10,7 @@ config: |
   network:
     do-ipv6: false
     listen:
-      - interface: eth0@53
+      - interface: eth0@8053
   rate-limiting:
     rate-limit: 768
     dry-run: true
@@ -22,6 +22,29 @@ overrides:
     spec:
       template:
         spec:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: knot
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+              volumeMounts:
+                - name: runtime
+                  mountPath: /run/knot-resolver
+                - name: cache
+                  mountPath: /var/cache/knot-resolver
+          volumes:
+            - name: runtime
+              emptyDir: {}
+            - name: cache
+              emptyDir: {}
           affinity:
             podAntiAffinity:
               preferredDuringSchedulingIgnoredDuringExecution:
