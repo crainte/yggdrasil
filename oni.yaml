@@ -1,6 +1,4 @@
 repositories:
-  project:
-    path: .
   packages:
     path: ../omusubiya/packages
   schemas:
@@ -8,11 +6,9 @@ repositories:
 platforms:
   kubernetes: ["1.36"]
 packages:
-  dns-namespace:
-    package: project/dns-namespace
-    version: "=1.0.0"
   knot-resolver:
     package: packages/knot-resolver
     version: "=6.5.0"
     namespace: dns
+    createNamespace: true
     config: knot-resolver.yaml
