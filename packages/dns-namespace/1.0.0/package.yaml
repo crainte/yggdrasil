@@ -1,0 +1,12 @@
+format: 1
+name: dns-namespace
+version: 1.0.0
+
+resources:
+  - name: dns-namespace
+    retention: retain
+    object:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: dns

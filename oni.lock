@@ -1,5 +1,8 @@
 version: 14
 roots:
+  dns-namespace:
+    package: yggdrasil/dns-namespace
+    version: =1.0.0
   knot-resolver:
     package: omusubiya-packages/knot-resolver
     version: =6.5.0
@@ -13,7 +16,26 @@ packages:
       package: omusubiya-packages/knot-resolver
       kind: root
       scope: knot-resolver
+  yggdrasil/dns-namespace:
+    version: 1.0.0
+    digest: sha256:3a48b5039d8da15bade10919497ab988cbaf960cd9cf8eaa9889a577b00159a1
+    dependencies: {}
+    runtime: {}
+    instance:
+      package: yggdrasil/dns-namespace
+      kind: root
+      scope: dns-namespace
 instances:
+  dns-namespace:
+    id:
+      package: yggdrasil/dns-namespace
+      kind: root
+      scope: dns-namespace
+    artifact:
+      package: yggdrasil/dns-namespace
+      version: 1.0.0
+      digest: sha256:3a48b5039d8da15bade10919497ab988cbaf960cd9cf8eaa9889a577b00159a1
+    runtime: {}
   knot-resolver:
     id:
       package: omusubiya-packages/knot-resolver
