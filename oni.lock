@@ -3,6 +3,9 @@ roots:
   bifrost:
     package: omusubiya-packages/bifrost
     version: =0.1.2
+  cert-manager:
+    package: omusubiya-packages/cert-manager
+    version: =1.21.2
   knot-resolver:
     package: omusubiya-packages/knot-resolver
     version: =6.5.1
@@ -37,6 +40,15 @@ packages:
       package: omusubiya-packages/bifrost
       kind: root
       scope: bifrost
+  omusubiya-packages/cert-manager:
+    version: 1.21.2
+    digest: sha256:b5b452c6df5b4a5ec6d002a4d13547d6c55e0cdea1ff0a2f513ab1ed15434fbd
+    dependencies: {}
+    runtime: {}
+    instance:
+      package: omusubiya-packages/cert-manager
+      kind: root
+      scope: cert-manager
   omusubiya-packages/knot-resolver:
     version: 6.5.1
     digest: sha256:c4911ac6ec71c3e8076a270112f332e6176d78af44d30f9abffcde44017b7e56
@@ -84,6 +96,16 @@ instances:
         constraints:
         - requirement: '>=1'
           source: package
+  cert-manager:
+    id:
+      package: omusubiya-packages/cert-manager
+      kind: root
+      scope: cert-manager
+    artifact:
+      package: omusubiya-packages/cert-manager
+      version: 1.21.2
+      digest: sha256:b5b452c6df5b4a5ec6d002a4d13547d6c55e0cdea1ff0a2f513ab1ed15434fbd
+    runtime: {}
   knot-resolver:
     id:
       package: omusubiya-packages/knot-resolver
@@ -119,3 +141,15 @@ images:
   ghcr.io/crainte/bifrost:0.1.0:
     digest: sha256:a4cd542823a998bc28f26f98977b4a1bfc2acff5e38480208aeec854ca59c8d3
     mediaType: application/vnd.oci.image.index.v1+json
+  quay.io/jetstack/cert-manager-acmesolver:v1.21.2:
+    digest: sha256:699b40d622211ab7accad8a21b04c5fbaa1841ef7a12621e8de492dbe27b2503
+    mediaType: application/vnd.docker.distribution.manifest.list.v2+json
+  quay.io/jetstack/cert-manager-cainjector:v1.21.2:
+    digest: sha256:c85268c64f2e0e76684bf5fe8906caff34b82523561c6affe0fae3546bd87562
+    mediaType: application/vnd.docker.distribution.manifest.list.v2+json
+  quay.io/jetstack/cert-manager-controller:v1.21.2:
+    digest: sha256:70f532fd9cfde0b09d55687200942399d89838bc2d5d5b45152eb799a15912b8
+    mediaType: application/vnd.docker.distribution.manifest.list.v2+json
+  quay.io/jetstack/cert-manager-webhook:v1.21.2:
+    digest: sha256:a60e2dac46dbb8a7f3df95c54ce941012f54c2fe022f0ee55aaa1ab40ed957ae
+    mediaType: application/vnd.docker.distribution.manifest.list.v2+json

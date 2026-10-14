@@ -6,6 +6,11 @@ repositories:
 platforms:
   kubernetes: ["1.36"]
 packages:
+  cert-manager:
+    package: packages/cert-manager
+    version: "=1.21.2"
+    namespace: cert-manager
+    createNamespace: true
   bifrost:
     package: packages/bifrost
     version: "=0.1.2"
