@@ -1,9 +1,42 @@
 version: 14
 roots:
+  bifrost:
+    package: omusubiya-packages/bifrost
+    version: =0.1.2
   knot-resolver:
     package: omusubiya-packages/knot-resolver
     version: =6.5.1
+  postgresql:
+    package: omusubiya-packages/postgresql
+    version: =16.15.0
 packages:
+  omusubiya-packages/bifrost:
+    version: 0.1.2
+    digest: sha256:f89c3cd7d154c14ab45a4e148dc817b9a036748533b7d977147b277636919498
+    dependencies: {}
+    runtime:
+      postgresql:
+        provider: omusubiya-packages/postgresql
+        version: 16.15.0
+        capability: postgresql
+        capability_version: 16.15.0
+        constraints:
+        - requirement: ^16
+          source: package
+        private: false
+      recursive-dns:
+        provider: omusubiya-packages/knot-resolver
+        version: 6.5.1
+        capability: recursive-dns
+        capability_version: 1.0.0
+        constraints:
+        - requirement: '>=1'
+          source: package
+        private: false
+    instance:
+      package: omusubiya-packages/bifrost
+      kind: root
+      scope: bifrost
   omusubiya-packages/knot-resolver:
     version: 6.5.1
     digest: sha256:c4911ac6ec71c3e8076a270112f332e6176d78af44d30f9abffcde44017b7e56
@@ -13,7 +46,44 @@ packages:
       package: omusubiya-packages/knot-resolver
       kind: root
       scope: knot-resolver
+  omusubiya-packages/postgresql:
+    version: 16.15.0
+    digest: sha256:e9e283c8c6302531b2bad5efce572e80e129734043ef2b235faaea2c2c5d022b
+    dependencies: {}
+    runtime: {}
+    instance:
+      package: omusubiya-packages/postgresql
+      kind: root
+      scope: postgresql
 instances:
+  bifrost:
+    id:
+      package: omusubiya-packages/bifrost
+      kind: root
+      scope: bifrost
+    artifact:
+      package: omusubiya-packages/bifrost
+      version: 0.1.2
+      digest: sha256:f89c3cd7d154c14ab45a4e148dc817b9a036748533b7d977147b277636919498
+    runtime:
+      postgresql:
+        provider_instance: postgresql
+        provider: omusubiya-packages/postgresql
+        version: 16.15.0
+        capability: postgresql
+        capability_version: 16.15.0
+        constraints:
+        - requirement: ^16
+          source: package
+      recursive-dns:
+        provider_instance: knot-resolver
+        provider: omusubiya-packages/knot-resolver
+        version: 6.5.1
+        capability: recursive-dns
+        capability_version: 1.0.0
+        constraints:
+        - requirement: '>=1'
+          source: package
   knot-resolver:
     id:
       package: omusubiya-packages/knot-resolver
@@ -24,6 +94,16 @@ instances:
       version: 6.5.1
       digest: sha256:c4911ac6ec71c3e8076a270112f332e6176d78af44d30f9abffcde44017b7e56
     runtime: {}
+  postgresql:
+    id:
+      package: omusubiya-packages/postgresql
+      kind: root
+      scope: postgresql
+    artifact:
+      package: omusubiya-packages/postgresql
+      version: 16.15.0
+      digest: sha256:e9e283c8c6302531b2bad5efce572e80e129734043ef2b235faaea2c2c5d022b
+    runtime: {}
 platforms:
   kubernetes:
     '1.36':
@@ -32,4 +112,10 @@ platforms:
 images:
   docker.io/cznic/knot-resolver:v6.5.0:
     digest: sha256:b2422a58c6b6ab863f24f9e80f65677ae45dcbe0ed9474ced8cb32453f5c49e0
+    mediaType: application/vnd.oci.image.index.v1+json
+  docker.io/library/postgres:16.15-bookworm:
+    digest: sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4
+    mediaType: application/vnd.oci.image.index.v1+json
+  ghcr.io/crainte/bifrost:0.1.0:
+    digest: sha256:a4cd542823a998bc28f26f98977b4a1bfc2acff5e38480208aeec854ca59c8d3
     mediaType: application/vnd.oci.image.index.v1+json

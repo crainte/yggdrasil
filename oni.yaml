@@ -6,6 +6,17 @@ repositories:
 platforms:
   kubernetes: ["1.36"]
 packages:
+  bifrost:
+    package: packages/bifrost
+    version: "=0.1.2"
+    namespace: infra
+    createNamespace: true
+    config: bifrost.yaml
+  postgresql:
+    package: packages/postgresql
+    version: "=16.15.0"
+    namespace: infra
+    config: postgresql.yaml
   knot-resolver:
     package: packages/knot-resolver
     version: "=6.5.1"

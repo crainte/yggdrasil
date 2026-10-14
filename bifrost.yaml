@@ -1,0 +1,12 @@
+secretName: bifrost-secrets
+anycastDnsIpA: 172.16.16.53
+anycastDnsIpB: 172.16.16.54
+webLoadBalancerIp: 172.16.16.55
+lanDnsResolvers:
+  in10: [10.10.0.1/32]
+config: |
+  {upstreams, [[{address, "10.98.124.11"}, {port, 53}]]}.
+  {cache, [{max_ttl, 3600}, {min_ttl, 60}, {max_entries, 100000}]}.
+  {network, [{listen_address, "0.0.0.0"}, {listen_port, 5454}, {unix_socket_path, "/run/bifrost/ipc.sock"}]}.
+  {blocking, [{mode, zero_ip}, {custom_ip, ""}]}.
+  {database, [{host, "postgresql.infra.svc.cluster.local"}, {port, 5432}, {name, "bifrost"}, {user, "bifrost"}]}.

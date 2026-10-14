@@ -1,0 +1,4 @@
+database: bifrost
+user: bifrost
+secretName: postgresql-secrets
+passwordKey: password
