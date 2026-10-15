@@ -1,4 +1,4 @@
-secretName: bifrost-secrets
+secretName: bifrost-credentials
 anycastDnsIpA: 172.16.16.53
 anycastDnsIpB: 172.16.16.54
 webLoadBalancerIp: 172.16.16.55

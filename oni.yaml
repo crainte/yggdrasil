@@ -28,8 +28,7 @@ packages:
   bifrost:
     package: packages/bifrost
     version: "=0.1.2"
-    namespace: infra
-    createNamespace: true
+    namespace: dns
     config: bifrost.yaml
   postgresql:
     package: packages/postgresql
