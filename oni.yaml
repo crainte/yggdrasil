@@ -11,6 +11,20 @@ packages:
     version: "=1.21.2"
     namespace: cert-manager
     createNamespace: true
+  external-secrets:
+    package: packages/external-secrets
+    version: "=2.12.0"
+    namespace: external-secrets
+    createNamespace: true
+  bitwarden-sdk-server:
+    package: packages/bitwarden-sdk-server
+    version: "=0.8.1"
+    namespace: external-secrets
+  bitwarden-secret-store:
+    package: packages/bitwarden-secret-store
+    version: "=1.0.0"
+    namespace: external-secrets
+    config: bitwarden-secret-store.yaml
   bifrost:
     package: packages/bifrost
     version: "=0.1.2"

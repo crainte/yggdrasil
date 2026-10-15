@@ -3,9 +3,18 @@ roots:
   bifrost:
     package: omusubiya-packages/bifrost
     version: =0.1.2
+  bitwarden-sdk-server:
+    package: omusubiya-packages/bitwarden-sdk-server
+    version: =0.8.1
+  bitwarden-secret-store:
+    package: omusubiya-packages/bitwarden-secret-store
+    version: =1.0.0
   cert-manager:
     package: omusubiya-packages/cert-manager
     version: =1.21.2
+  external-secrets:
+    package: omusubiya-packages/external-secrets
+    version: =2.12.0
   knot-resolver:
     package: omusubiya-packages/knot-resolver
     version: =6.5.1
@@ -40,15 +49,78 @@ packages:
       package: omusubiya-packages/bifrost
       kind: root
       scope: bifrost
+  omusubiya-packages/bitwarden-sdk-server:
+    version: 0.8.1
+    digest: sha256:4cf169438a3e4edc94ba85e96b3f50d130a3512f7db4162d79b77bb8a16e8610
+    dependencies: {}
+    runtime:
+      cert-manager:
+        provider: omusubiya-packages/cert-manager
+        version: 1.21.2
+        capability: cert-manager
+        capability_version: 1.21.2
+        constraints:
+        - requirement: '>=1'
+          source: package
+        private: false
+      external-secrets:
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
+        private: false
+    instance:
+      package: omusubiya-packages/bitwarden-sdk-server
+      kind: root
+      scope: bitwarden-sdk-server
+  omusubiya-packages/bitwarden-secret-store:
+    version: 1.0.0
+    digest: sha256:a71aa30419c96f4fd2e28af69ccd36c9537754e424288da11762f7097c396260
+    dependencies: {}
+    runtime:
+      bitwarden-sdk-server:
+        provider: omusubiya-packages/bitwarden-sdk-server
+        version: 0.8.1
+        capability: bitwarden-sdk-server
+        capability_version: 0.8.1
+        constraints:
+        - requirement: ^0.8
+          source: package
+        private: false
+      external-secrets:
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
+        private: false
+    instance:
+      package: omusubiya-packages/bitwarden-secret-store
+      kind: root
+      scope: bitwarden-secret-store
   omusubiya-packages/cert-manager:
     version: 1.21.2
-    digest: sha256:b5b452c6df5b4a5ec6d002a4d13547d6c55e0cdea1ff0a2f513ab1ed15434fbd
+    digest: sha256:979106bfdeb7b62b5365587c6fefa57ca191dd4c16e5d3a027c3c91e3e1d1f25
     dependencies: {}
     runtime: {}
     instance:
       package: omusubiya-packages/cert-manager
       kind: root
       scope: cert-manager
+  omusubiya-packages/external-secrets:
+    version: 2.12.0
+    digest: sha256:43b7ce66267263d5d500c5d737ffc067887f05e555d5872f419ebc0b4b218846
+    dependencies: {}
+    runtime: {}
+    instance:
+      package: omusubiya-packages/external-secrets
+      kind: root
+      scope: external-secrets
   omusubiya-packages/knot-resolver:
     version: 6.5.1
     digest: sha256:c4911ac6ec71c3e8076a270112f332e6176d78af44d30f9abffcde44017b7e56
@@ -96,6 +168,62 @@ instances:
         constraints:
         - requirement: '>=1'
           source: package
+  bitwarden-sdk-server:
+    id:
+      package: omusubiya-packages/bitwarden-sdk-server
+      kind: root
+      scope: bitwarden-sdk-server
+    artifact:
+      package: omusubiya-packages/bitwarden-sdk-server
+      version: 0.8.1
+      digest: sha256:4cf169438a3e4edc94ba85e96b3f50d130a3512f7db4162d79b77bb8a16e8610
+    runtime:
+      cert-manager:
+        provider_instance: cert-manager
+        provider: omusubiya-packages/cert-manager
+        version: 1.21.2
+        capability: cert-manager
+        capability_version: 1.21.2
+        constraints:
+        - requirement: '>=1'
+          source: package
+      external-secrets:
+        provider_instance: external-secrets
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
+  bitwarden-secret-store:
+    id:
+      package: omusubiya-packages/bitwarden-secret-store
+      kind: root
+      scope: bitwarden-secret-store
+    artifact:
+      package: omusubiya-packages/bitwarden-secret-store
+      version: 1.0.0
+      digest: sha256:a71aa30419c96f4fd2e28af69ccd36c9537754e424288da11762f7097c396260
+    runtime:
+      bitwarden-sdk-server:
+        provider_instance: bitwarden-sdk-server
+        provider: omusubiya-packages/bitwarden-sdk-server
+        version: 0.8.1
+        capability: bitwarden-sdk-server
+        capability_version: 0.8.1
+        constraints:
+        - requirement: ^0.8
+          source: package
+      external-secrets:
+        provider_instance: external-secrets
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
   cert-manager:
     id:
       package: omusubiya-packages/cert-manager
@@ -104,7 +232,17 @@ instances:
     artifact:
       package: omusubiya-packages/cert-manager
       version: 1.21.2
-      digest: sha256:b5b452c6df5b4a5ec6d002a4d13547d6c55e0cdea1ff0a2f513ab1ed15434fbd
+      digest: sha256:979106bfdeb7b62b5365587c6fefa57ca191dd4c16e5d3a027c3c91e3e1d1f25
+    runtime: {}
+  external-secrets:
+    id:
+      package: omusubiya-packages/external-secrets
+      kind: root
+      scope: external-secrets
+    artifact:
+      package: omusubiya-packages/external-secrets
+      version: 2.12.0
+      digest: sha256:43b7ce66267263d5d500c5d737ffc067887f05e555d5872f419ebc0b4b218846
     runtime: {}
   knot-resolver:
     id:
@@ -140,6 +278,12 @@ images:
     mediaType: application/vnd.oci.image.index.v1+json
   ghcr.io/crainte/bifrost:0.1.0:
     digest: sha256:a4cd542823a998bc28f26f98977b4a1bfc2acff5e38480208aeec854ca59c8d3
+    mediaType: application/vnd.oci.image.index.v1+json
+  ghcr.io/external-secrets/bitwarden-sdk-server:v0.8.1:
+    digest: sha256:d2266559f57eff819aab5016c565f9e203895850b0d8a1ea8fc340fad34f4a10
+    mediaType: application/vnd.oci.image.index.v1+json
+  ghcr.io/external-secrets/external-secrets:v2.12.0:
+    digest: sha256:7a3c4f7e038fa0f86a3172da19b9388f3f4d846e87e9994ee3474c5b72a9330d
     mediaType: application/vnd.oci.image.index.v1+json
   quay.io/jetstack/cert-manager-acmesolver:v1.21.2:
     digest: sha256:699b40d622211ab7accad8a21b04c5fbaa1841ef7a12621e8de492dbe27b2503
