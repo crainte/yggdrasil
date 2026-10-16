@@ -21,12 +21,24 @@ roots:
   postgresql:
     package: omusubiya-packages/postgresql
     version: =16.15.0
+  postgresql-credentials:
+    package: omusubiya-packages/postgresql-credentials
+    version: =1.0.0
 packages:
   omusubiya-packages/bifrost:
     version: 0.1.2
-    digest: sha256:d8e511f829018183f741550d42c24bd57e4d167730d97d899abf8dce7d0620b7
+    digest: sha256:8fe2819925a7ac2a5018320c4ccb54d0a00f5e72e444a8f3ecac2204d23f6a95
     dependencies: {}
     runtime:
+      external-secrets:
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
+        private: false
       postgresql:
         provider: omusubiya-packages/postgresql
         version: 16.15.0
@@ -78,7 +90,7 @@ packages:
       scope: bitwarden-sdk-server
   omusubiya-packages/bitwarden-secret-store:
     version: 1.0.0
-    digest: sha256:0a344b00ea95c22d8d0c5d74020b2981143e209ae2c9f550905f4f4caad67cc0
+    digest: sha256:7557788c16866ff1326374348d046b8afea588f73f3e7363112cfa0903f34c5b
     dependencies: {}
     runtime:
       bitwarden-sdk-server:
@@ -123,7 +135,7 @@ packages:
       scope: external-secrets
   omusubiya-packages/knot-resolver:
     version: 6.5.1
-    digest: sha256:e1a5894ace968c41fe37423181b21c5496d50947adea1a1d97876e05f686b370
+    digest: sha256:92620d076cb607abcd7182fe4faf76e37032109a3194b0c3fa0838a60398e332
     dependencies: {}
     runtime: {}
     instance:
@@ -139,6 +151,24 @@ packages:
       package: omusubiya-packages/postgresql
       kind: root
       scope: postgresql
+  omusubiya-packages/postgresql-credentials:
+    version: 1.0.0
+    digest: sha256:cd0831da6668ea748ffadea7c87c4b4644d6ad9de1d71f1769ae971243e7cd2d
+    dependencies: {}
+    runtime:
+      external-secrets:
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
+        private: false
+    instance:
+      package: omusubiya-packages/postgresql-credentials
+      kind: root
+      scope: postgresql-credentials
 instances:
   bifrost:
     id:
@@ -148,8 +178,17 @@ instances:
     artifact:
       package: omusubiya-packages/bifrost
       version: 0.1.2
-      digest: sha256:d8e511f829018183f741550d42c24bd57e4d167730d97d899abf8dce7d0620b7
+      digest: sha256:8fe2819925a7ac2a5018320c4ccb54d0a00f5e72e444a8f3ecac2204d23f6a95
     runtime:
+      external-secrets:
+        provider_instance: external-secrets
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
       postgresql:
         provider_instance: postgresql
         provider: omusubiya-packages/postgresql
@@ -204,7 +243,7 @@ instances:
     artifact:
       package: omusubiya-packages/bitwarden-secret-store
       version: 1.0.0
-      digest: sha256:0a344b00ea95c22d8d0c5d74020b2981143e209ae2c9f550905f4f4caad67cc0
+      digest: sha256:7557788c16866ff1326374348d046b8afea588f73f3e7363112cfa0903f34c5b
     runtime:
       bitwarden-sdk-server:
         provider_instance: bitwarden-sdk-server
@@ -252,7 +291,7 @@ instances:
     artifact:
       package: omusubiya-packages/knot-resolver
       version: 6.5.1
-      digest: sha256:e1a5894ace968c41fe37423181b21c5496d50947adea1a1d97876e05f686b370
+      digest: sha256:92620d076cb607abcd7182fe4faf76e37032109a3194b0c3fa0838a60398e332
     runtime: {}
   postgresql:
     id:
@@ -264,6 +303,25 @@ instances:
       version: 16.15.0
       digest: sha256:8cc3a7b3017b02cad4f014132340b4821e6f85d92283f63791bd56a164d9a40f
     runtime: {}
+  postgresql-credentials:
+    id:
+      package: omusubiya-packages/postgresql-credentials
+      kind: root
+      scope: postgresql-credentials
+    artifact:
+      package: omusubiya-packages/postgresql-credentials
+      version: 1.0.0
+      digest: sha256:cd0831da6668ea748ffadea7c87c4b4644d6ad9de1d71f1769ae971243e7cd2d
+    runtime:
+      external-secrets:
+        provider_instance: external-secrets
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
 platforms:
   kubernetes:
     '1.36':

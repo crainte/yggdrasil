@@ -30,6 +30,11 @@ packages:
     version: "=0.1.2"
     namespace: dns
     config: bifrost.yaml
+  postgresql-credentials:
+    package: packages/postgresql-credentials
+    version: "=1.0.0"
+    namespace: infra
+    config: postgresql-credentials.yaml
   postgresql:
     package: packages/postgresql
     version: "=16.15.0"
