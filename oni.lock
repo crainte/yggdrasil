@@ -132,7 +132,7 @@ packages:
       scope: knot-resolver
   omusubiya-packages/postgresql:
     version: 16.15.0
-    digest: sha256:e9e283c8c6302531b2bad5efce572e80e129734043ef2b235faaea2c2c5d022b
+    digest: sha256:8cc3a7b3017b02cad4f014132340b4821e6f85d92283f63791bd56a164d9a40f
     dependencies: {}
     runtime: {}
     instance:
@@ -262,7 +262,7 @@ instances:
     artifact:
       package: omusubiya-packages/postgresql
       version: 16.15.0
-      digest: sha256:e9e283c8c6302531b2bad5efce572e80e129734043ef2b235faaea2c2c5d022b
+      digest: sha256:8cc3a7b3017b02cad4f014132340b4821e6f85d92283f63791bd56a164d9a40f
     runtime: {}
 platforms:
   kubernetes:
