@@ -24,7 +24,7 @@ roots:
 packages:
   omusubiya-packages/bifrost:
     version: 0.1.2
-    digest: sha256:f89c3cd7d154c14ab45a4e148dc817b9a036748533b7d977147b277636919498
+    digest: sha256:d8e511f829018183f741550d42c24bd57e4d167730d97d899abf8dce7d0620b7
     dependencies: {}
     runtime:
       postgresql:
@@ -51,7 +51,7 @@ packages:
       scope: bifrost
   omusubiya-packages/bitwarden-sdk-server:
     version: 0.8.1
-    digest: sha256:4cf169438a3e4edc94ba85e96b3f50d130a3512f7db4162d79b77bb8a16e8610
+    digest: sha256:956f5c966821a6edf6315bd6351aa1de26bf690f1f17bbaef21485340b5c2036
     dependencies: {}
     runtime:
       cert-manager:
@@ -78,7 +78,7 @@ packages:
       scope: bitwarden-sdk-server
   omusubiya-packages/bitwarden-secret-store:
     version: 1.0.0
-    digest: sha256:a71aa30419c96f4fd2e28af69ccd36c9537754e424288da11762f7097c396260
+    digest: sha256:0a344b00ea95c22d8d0c5d74020b2981143e209ae2c9f550905f4f4caad67cc0
     dependencies: {}
     runtime:
       bitwarden-sdk-server:
@@ -105,7 +105,7 @@ packages:
       scope: bitwarden-secret-store
   omusubiya-packages/cert-manager:
     version: 1.21.2
-    digest: sha256:979106bfdeb7b62b5365587c6fefa57ca191dd4c16e5d3a027c3c91e3e1d1f25
+    digest: sha256:96c4eb86e61f0df431b066b7c84d6452ea882c96a6417eef5720c58bcfe60e21
     dependencies: {}
     runtime: {}
     instance:
@@ -114,7 +114,7 @@ packages:
       scope: cert-manager
   omusubiya-packages/external-secrets:
     version: 2.12.0
-    digest: sha256:43b7ce66267263d5d500c5d737ffc067887f05e555d5872f419ebc0b4b218846
+    digest: sha256:e686a7a0182ee1e1740701967fd182b62e3f162aa81b27e17c457ce9c2aaab5d
     dependencies: {}
     runtime: {}
     instance:
@@ -148,7 +148,7 @@ instances:
     artifact:
       package: omusubiya-packages/bifrost
       version: 0.1.2
-      digest: sha256:f89c3cd7d154c14ab45a4e148dc817b9a036748533b7d977147b277636919498
+      digest: sha256:d8e511f829018183f741550d42c24bd57e4d167730d97d899abf8dce7d0620b7
     runtime:
       postgresql:
         provider_instance: postgresql
@@ -176,7 +176,7 @@ instances:
     artifact:
       package: omusubiya-packages/bitwarden-sdk-server
       version: 0.8.1
-      digest: sha256:4cf169438a3e4edc94ba85e96b3f50d130a3512f7db4162d79b77bb8a16e8610
+      digest: sha256:956f5c966821a6edf6315bd6351aa1de26bf690f1f17bbaef21485340b5c2036
     runtime:
       cert-manager:
         provider_instance: cert-manager
@@ -204,7 +204,7 @@ instances:
     artifact:
       package: omusubiya-packages/bitwarden-secret-store
       version: 1.0.0
-      digest: sha256:a71aa30419c96f4fd2e28af69ccd36c9537754e424288da11762f7097c396260
+      digest: sha256:0a344b00ea95c22d8d0c5d74020b2981143e209ae2c9f550905f4f4caad67cc0
     runtime:
       bitwarden-sdk-server:
         provider_instance: bitwarden-sdk-server
@@ -232,7 +232,7 @@ instances:
     artifact:
       package: omusubiya-packages/cert-manager
       version: 1.21.2
-      digest: sha256:979106bfdeb7b62b5365587c6fefa57ca191dd4c16e5d3a027c3c91e3e1d1f25
+      digest: sha256:96c4eb86e61f0df431b066b7c84d6452ea882c96a6417eef5720c58bcfe60e21
     runtime: {}
   external-secrets:
     id:
@@ -242,7 +242,7 @@ instances:
     artifact:
       package: omusubiya-packages/external-secrets
       version: 2.12.0
-      digest: sha256:43b7ce66267263d5d500c5d737ffc067887f05e555d5872f419ebc0b4b218846
+      digest: sha256:e686a7a0182ee1e1740701967fd182b62e3f162aa81b27e17c457ce9c2aaab5d
     runtime: {}
   knot-resolver:
     id:
@@ -267,7 +267,7 @@ instances:
 platforms:
   kubernetes:
     '1.36':
-      digest: sha256:418d37e8684294965799119216abb35f0a8ecebfdafff854c9620442a61d75e5
+      digest: sha256:ff6746ae6a6080d08fd8db38ca594394e036294ed4b8f401368e1b717378bef9
       source: onigiri-schema-registry
 images:
   docker.io/cznic/knot-resolver:v6.5.0:
