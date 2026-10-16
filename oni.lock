@@ -105,7 +105,7 @@ packages:
       scope: bitwarden-secret-store
   omusubiya-packages/cert-manager:
     version: 1.21.2
-    digest: sha256:96c4eb86e61f0df431b066b7c84d6452ea882c96a6417eef5720c58bcfe60e21
+    digest: sha256:1d6abf7aed12bb124961aba90b374aa3529c135094f918e1e1b7abbbab78e63a
     dependencies: {}
     runtime: {}
     instance:
@@ -123,7 +123,7 @@ packages:
       scope: external-secrets
   omusubiya-packages/knot-resolver:
     version: 6.5.1
-    digest: sha256:c4911ac6ec71c3e8076a270112f332e6176d78af44d30f9abffcde44017b7e56
+    digest: sha256:e1a5894ace968c41fe37423181b21c5496d50947adea1a1d97876e05f686b370
     dependencies: {}
     runtime: {}
     instance:
@@ -232,7 +232,7 @@ instances:
     artifact:
       package: omusubiya-packages/cert-manager
       version: 1.21.2
-      digest: sha256:96c4eb86e61f0df431b066b7c84d6452ea882c96a6417eef5720c58bcfe60e21
+      digest: sha256:1d6abf7aed12bb124961aba90b374aa3529c135094f918e1e1b7abbbab78e63a
     runtime: {}
   external-secrets:
     id:
@@ -252,7 +252,7 @@ instances:
     artifact:
       package: omusubiya-packages/knot-resolver
       version: 6.5.1
-      digest: sha256:c4911ac6ec71c3e8076a270112f332e6176d78af44d30f9abffcde44017b7e56
+      digest: sha256:e1a5894ace968c41fe37423181b21c5496d50947adea1a1d97876e05f686b370
     runtime: {}
   postgresql:
     id:

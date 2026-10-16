@@ -17,8 +17,8 @@ config: |
   cache:
     prefetch:
       expiring: true
-overrides:
-  deployment/knot:
+deployments:
+  knot:
     spec:
       template:
         spec:
@@ -51,7 +51,5 @@ overrides:
                 - weight: 100
                   podAffinityTerm:
                     labelSelector:
-                      matchLabels:
-                        onigiri.dev/instance: knot-resolver
-                        onigiri.dev/workload: knot
+                      $ref: pod-disruption-budgets/knot.spec.selector
                     topologyKey: kubernetes.io/hostname
