@@ -1,8 +1,9 @@
 repositories:
   packages:
-    path: ../omusubiya/packages
+    git: https://github.com/omusubiya/packages.git
+
   schemas:
-    path: ../schema-registry
+    git: https://github.com/omusubiya/schema-registry.git
 platforms:
   kubernetes: ["1.36"]
 packages:
