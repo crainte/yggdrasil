@@ -1,48 +1,34 @@
-repositories:
-  packages:
-    git: https://github.com/omusubiya/packages.git
-
-  schemas:
-    git: https://github.com/omusubiya/schema-registry.git
 platforms:
   kubernetes: ["1.36"]
 packages:
   cert-manager:
-    package: packages/cert-manager
     version: "=1.21.2"
     namespace: cert-manager
     createNamespace: true
   external-secrets:
-    package: packages/external-secrets
     version: "=2.12.0"
     namespace: external-secrets
     createNamespace: true
   bitwarden-sdk-server:
-    package: packages/bitwarden-sdk-server
     version: "=0.8.1"
     namespace: external-secrets
   bitwarden-secret-store:
-    package: packages/bitwarden-secret-store
     version: "=1.0.0"
     namespace: external-secrets
     config: bitwarden-secret-store.yaml
   bifrost:
-    package: packages/bifrost
     version: "=0.1.2"
     namespace: dns
     config: bifrost.yaml
   postgresql-credentials:
-    package: packages/postgresql-credentials
     version: "=1.0.0"
     namespace: infra
     config: postgresql-credentials.yaml
   postgresql:
-    package: packages/postgresql
     version: "=16.15.0"
     namespace: infra
     config: postgresql.yaml
   knot-resolver:
-    package: packages/knot-resolver
     version: "=6.5.1"
     namespace: dns
     createNamespace: true

@@ -18,12 +18,12 @@ Root instances set `namespace:`; roots with `createNamespace: true` make Onigiri
 
 Container image tags declared by packages are pinned to registry digests in `oni.lock` (`images:`). `oni lock` needs registry access only for tags that are not locked yet; `oni check` and `oni render` never contact a registry. Re-resolve a moved tag explicitly with `oni update . --image <reference|all>`.
 
-The package and Kubernetes schema repositories are consumed from their published Git remotes (`git:` in `oni.yaml`). Their `repository.yaml` manifests provide the durable lock identities `omusubiya-packages` and `onigiri-schema-registry`, independent of transport. Only explicit resolution (`oni lock`, `oni update`, `oni outdated`) fetches them; `oni render`, `oni check`, and `oni plan` work offline from `oni.lock` and the local immutable artifact store.
+Packages and Kubernetes schema platforms come from Oni's built-in official repositories (`onigiri` and `kubernetes`), so `oni.yaml` declares no repositories. Their `repository.yaml` manifests provide the durable lock identities `omusubiya-packages` and `onigiri-schema-registry`, independent of transport (`oni repo list` shows the registrations; `oni repo set-remote` redirects them to a mirror). Only explicit resolution (`oni lock`, `oni update`, `oni outdated`) fetches them; `oni render`, `oni check`, and `oni plan` work offline from `oni.lock` and the local immutable artifact store.
 
 To test unpublished package or schema changes from sibling checkouts without editing `oni.yaml`:
 
 ```sh
 oni lock . \
-  --repository-path packages=../omusubiya/packages \
-  --repository-path schemas=../schema-registry
+  --repository-path onigiri=../omusubiya/packages \
+  --repository-path kubernetes=../schema-registry
 ```
