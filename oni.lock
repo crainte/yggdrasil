@@ -1,5 +1,8 @@
 version: 14
 roots:
+  alloy:
+    package: omusubiya-packages/alloy
+    version: =1.13.1
   bifrost:
     package: omusubiya-packages/bifrost
     version: =0.1.2
@@ -25,9 +28,18 @@ roots:
     package: omusubiya-packages/postgresql-credentials
     version: =1.0.0
 packages:
+  omusubiya-packages/alloy:
+    version: 1.13.1
+    digest: sha256:d7ed870f60e9428edf5bfa4e7a7a9c320f45a5d5edbd28c7bb84498d3ec2ee6a
+    dependencies: {}
+    runtime: {}
+    instance:
+      package: omusubiya-packages/alloy
+      kind: root
+      scope: alloy
   omusubiya-packages/bifrost:
     version: 0.1.2
-    digest: sha256:8fe2819925a7ac2a5018320c4ccb54d0a00f5e72e444a8f3ecac2204d23f6a95
+    digest: sha256:645cd00060070e1fffa7c10d64909782f864544703bc5dd6c98b4ad9cbef2652
     dependencies: {}
     runtime:
       external-secrets:
@@ -63,7 +75,7 @@ packages:
       scope: bifrost
   omusubiya-packages/bitwarden-sdk-server:
     version: 0.8.1
-    digest: sha256:956f5c966821a6edf6315bd6351aa1de26bf690f1f17bbaef21485340b5c2036
+    digest: sha256:f1e011d13553b1176e4d6a2ba71809cfd6bff3770f279acb61ff8fddee1530cb
     dependencies: {}
     runtime:
       cert-manager:
@@ -117,7 +129,7 @@ packages:
       scope: bitwarden-secret-store
   omusubiya-packages/cert-manager:
     version: 1.21.2
-    digest: sha256:1d6abf7aed12bb124961aba90b374aa3529c135094f918e1e1b7abbbab78e63a
+    digest: sha256:54c08bab2de6c4923c9fd73efcecc9762f0fd866a6e57ea2147b9d4a1d1d4c6d
     dependencies: {}
     runtime: {}
     instance:
@@ -126,7 +138,7 @@ packages:
       scope: cert-manager
   omusubiya-packages/external-secrets:
     version: 2.12.0
-    digest: sha256:e686a7a0182ee1e1740701967fd182b62e3f162aa81b27e17c457ce9c2aaab5d
+    digest: sha256:741a40b396b07878fd1cb2a0acd699b51a620c5447096f6c4778a27f3696c81f
     dependencies: {}
     runtime: {}
     instance:
@@ -135,7 +147,7 @@ packages:
       scope: external-secrets
   omusubiya-packages/knot-resolver:
     version: 6.5.1
-    digest: sha256:92620d076cb607abcd7182fe4faf76e37032109a3194b0c3fa0838a60398e332
+    digest: sha256:2139482eb2dc6cd6092ffc225e387c982098da798f527d69cbef4c7368f1b490
     dependencies: {}
     runtime: {}
     instance:
@@ -144,7 +156,7 @@ packages:
       scope: knot-resolver
   omusubiya-packages/postgresql:
     version: 16.15.0
-    digest: sha256:8cc3a7b3017b02cad4f014132340b4821e6f85d92283f63791bd56a164d9a40f
+    digest: sha256:f724d72930fd11a3cf4d25c0bcfa1ab55a1a13e28deb788029d6b7ec0843bdaa
     dependencies: {}
     runtime: {}
     instance:
@@ -170,6 +182,16 @@ packages:
       kind: root
       scope: postgresql-credentials
 instances:
+  alloy:
+    id:
+      package: omusubiya-packages/alloy
+      kind: root
+      scope: alloy
+    artifact:
+      package: omusubiya-packages/alloy
+      version: 1.13.1
+      digest: sha256:d7ed870f60e9428edf5bfa4e7a7a9c320f45a5d5edbd28c7bb84498d3ec2ee6a
+    runtime: {}
   bifrost:
     id:
       package: omusubiya-packages/bifrost
@@ -178,7 +200,7 @@ instances:
     artifact:
       package: omusubiya-packages/bifrost
       version: 0.1.2
-      digest: sha256:8fe2819925a7ac2a5018320c4ccb54d0a00f5e72e444a8f3ecac2204d23f6a95
+      digest: sha256:645cd00060070e1fffa7c10d64909782f864544703bc5dd6c98b4ad9cbef2652
     runtime:
       external-secrets:
         provider_instance: external-secrets
@@ -215,7 +237,7 @@ instances:
     artifact:
       package: omusubiya-packages/bitwarden-sdk-server
       version: 0.8.1
-      digest: sha256:956f5c966821a6edf6315bd6351aa1de26bf690f1f17bbaef21485340b5c2036
+      digest: sha256:f1e011d13553b1176e4d6a2ba71809cfd6bff3770f279acb61ff8fddee1530cb
     runtime:
       cert-manager:
         provider_instance: cert-manager
@@ -271,7 +293,7 @@ instances:
     artifact:
       package: omusubiya-packages/cert-manager
       version: 1.21.2
-      digest: sha256:1d6abf7aed12bb124961aba90b374aa3529c135094f918e1e1b7abbbab78e63a
+      digest: sha256:54c08bab2de6c4923c9fd73efcecc9762f0fd866a6e57ea2147b9d4a1d1d4c6d
     runtime: {}
   external-secrets:
     id:
@@ -281,7 +303,7 @@ instances:
     artifact:
       package: omusubiya-packages/external-secrets
       version: 2.12.0
-      digest: sha256:e686a7a0182ee1e1740701967fd182b62e3f162aa81b27e17c457ce9c2aaab5d
+      digest: sha256:741a40b396b07878fd1cb2a0acd699b51a620c5447096f6c4778a27f3696c81f
     runtime: {}
   knot-resolver:
     id:
@@ -291,7 +313,7 @@ instances:
     artifact:
       package: omusubiya-packages/knot-resolver
       version: 6.5.1
-      digest: sha256:92620d076cb607abcd7182fe4faf76e37032109a3194b0c3fa0838a60398e332
+      digest: sha256:2139482eb2dc6cd6092ffc225e387c982098da798f527d69cbef4c7368f1b490
     runtime: {}
   postgresql:
     id:
@@ -301,7 +323,7 @@ instances:
     artifact:
       package: omusubiya-packages/postgresql
       version: 16.15.0
-      digest: sha256:8cc3a7b3017b02cad4f014132340b4821e6f85d92283f63791bd56a164d9a40f
+      digest: sha256:f724d72930fd11a3cf4d25c0bcfa1ab55a1a13e28deb788029d6b7ec0843bdaa
     runtime: {}
   postgresql-credentials:
     id:
@@ -331,11 +353,14 @@ images:
   docker.io/cznic/knot-resolver:v6.5.0:
     digest: sha256:b2422a58c6b6ab863f24f9e80f65677ae45dcbe0ed9474ced8cb32453f5c49e0
     mediaType: application/vnd.oci.image.index.v1+json
+  docker.io/grafana/alloy:v1.20.1:
+    digest: sha256:2aa2099af76c0098d4af7a4d6e48f86cb66dc1a000222ad927a1c67c6542d13f
+    mediaType: application/vnd.oci.image.index.v1+json
   docker.io/library/postgres:16.15-bookworm:
     digest: sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4
     mediaType: application/vnd.oci.image.index.v1+json
-  ghcr.io/crainte/bifrost:0.1.0:
-    digest: sha256:a4cd542823a998bc28f26f98977b4a1bfc2acff5e38480208aeec854ca59c8d3
+  ghcr.io/crainte/bifrost:0.1.2:
+    digest: sha256:eddcb1dc1901e119026487f074d6b1cdfb543c876cc7428dd4aa93fe90e0e68a
     mediaType: application/vnd.oci.image.index.v1+json
   ghcr.io/external-secrets/bitwarden-sdk-server:v0.8.1:
     digest: sha256:d2266559f57eff819aab5016c565f9e203895850b0d8a1ea8fc340fad34f4a10
@@ -354,4 +379,7 @@ images:
     mediaType: application/vnd.docker.distribution.manifest.list.v2+json
   quay.io/jetstack/cert-manager-webhook:v1.21.2:
     digest: sha256:a60e2dac46dbb8a7f3df95c54ce941012f54c2fe022f0ee55aaa1ab40ed957ae
+    mediaType: application/vnd.docker.distribution.manifest.list.v2+json
+  quay.io/prometheus-operator/prometheus-config-reloader:v0.94.0:
+    digest: sha256:142a1f11df8dd165f00375b0b1826aecb9c9adeb05c39855893138d7c7575ff7
     mediaType: application/vnd.docker.distribution.manifest.list.v2+json

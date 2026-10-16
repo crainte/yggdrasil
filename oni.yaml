@@ -33,3 +33,8 @@ packages:
     namespace: dns
     createNamespace: true
     config: knot-resolver.yaml
+  alloy:
+    version: "=1.13.1"
+    namespace: monitoring
+    createNamespace: true
+    config: alloy.yaml

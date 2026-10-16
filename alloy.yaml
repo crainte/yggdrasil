@@ -1,0 +1,161 @@
+namespace: monitoring
+config: |
+  logging {
+    level  = "info"
+    format = "logfmt"
+  }
+
+  prometheus.remote_write "unraid" {
+    endpoint {
+      url = "http://10.10.10.189:9090/api/v1/write"
+    }
+
+    external_labels = {
+      cluster = "yggdrasil",
+    }
+  }
+
+  prometheus.exporter.self "alloy" {}
+
+  prometheus.scrape "alloy" {
+    targets    = prometheus.exporter.self.alloy.targets
+    forward_to = [prometheus.remote_write.unraid.receiver]
+  }
+
+  discovery.kubernetes "nodes" {
+    role = "node"
+  }
+
+  discovery.relabel "kubelet" {
+    targets = discovery.kubernetes.nodes.targets
+
+      rule {
+        target_label = "__metrics_path__"
+        replacement  = "/metrics"
+      }
+
+
+    rule {
+      source_labels = ["__meta_kubernetes_node_name"]
+      target_label  = "node"
+    }
+  }
+
+  prometheus.scrape "kubelet" {
+    targets           = discovery.relabel.kubelet.output
+    scheme            = "https"
+    bearer_token_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+    scrape_interval   = "30s"
+    scrape_timeout    = "10s"
+    forward_to        = [prometheus.remote_write.unraid.receiver]
+
+    clustering {
+      enabled = true
+    }
+
+      tls_config {
+        ca_file = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+      }
+
+  }
+
+  discovery.relabel "cadvisor" {
+    targets = discovery.kubernetes.nodes.targets
+
+      rule {
+        target_label = "__metrics_path__"
+        replacement  = "/metrics/cadvisor"
+      }
+
+
+    rule {
+      source_labels = ["__meta_kubernetes_node_name"]
+      target_label  = "node"
+    }
+  }
+
+  prometheus.scrape "cadvisor" {
+    targets           = discovery.relabel.cadvisor.output
+    scheme            = "https"
+    bearer_token_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+    scrape_interval   = "30s"
+    scrape_timeout    = "10s"
+    forward_to        = [prometheus.remote_write.unraid.receiver]
+
+    clustering {
+      enabled = true
+    }
+
+      tls_config {
+        ca_file = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+      }
+
+  }
+
+  discovery.kubernetes "pods" {
+    role = "pod"
+  }
+
+  discovery.relabel "annotated_pods" {
+    targets = discovery.kubernetes.pods.targets
+
+    rule {
+      source_labels = ["__meta_kubernetes_pod_annotation_prometheus_io_scrape"]
+      action        = "keep"
+      regex         = "true"
+    }
+
+    rule {
+      source_labels = ["__meta_kubernetes_pod_phase"]
+      action        = "keep"
+      regex         = "Running"
+    }
+
+    rule {
+      source_labels = ["__meta_kubernetes_pod_annotation_prometheus_io_scheme"]
+      action        = "replace"
+      regex         = "(https?)"
+      target_label  = "__scheme__"
+    }
+
+    rule {
+      source_labels = ["__meta_kubernetes_pod_annotation_prometheus_io_path"]
+      action        = "replace"
+      regex         = "(.+)"
+      target_label  = "__metrics_path__"
+    }
+
+    rule {
+      source_labels = ["__address__", "__meta_kubernetes_pod_annotation_prometheus_io_port"]
+      action        = "replace"
+      regex         = "([^:]+)(?::\\d+)?;(\\d+)"
+      replacement   = "$1:$2"
+      target_label  = "__address__"
+    }
+
+    rule {
+      source_labels = ["__meta_kubernetes_namespace"]
+      target_label  = "namespace"
+    }
+
+    rule {
+      source_labels = ["__meta_kubernetes_pod_name"]
+      target_label  = "pod"
+    }
+
+    rule {
+      source_labels = ["__meta_kubernetes_pod_node_name"]
+      target_label  = "node"
+    }
+  }
+
+  prometheus.scrape "annotated_pods" {
+    targets         = discovery.relabel.annotated_pods.output
+    scrape_interval = "30s"
+    scrape_timeout  = "10s"
+    forward_to      = [prometheus.remote_write.unraid.receiver]
+
+    clustering {
+      enabled = true
+    }
+  }
