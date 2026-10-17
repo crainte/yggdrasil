@@ -38,3 +38,8 @@ packages:
     namespace: monitoring
     createNamespace: true
     config: alloy.yaml
+  chrony:
+    version: "=0.9.1"
+    namespace: ntp
+    createNamespace: true
+    config: chrony.yaml

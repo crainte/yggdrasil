@@ -15,6 +15,9 @@ roots:
   cert-manager:
     package: omusubiya-packages/cert-manager
     version: =1.21.2
+  chrony:
+    package: omusubiya-packages/chrony
+    version: =0.9.1
   external-secrets:
     package: omusubiya-packages/external-secrets
     version: =2.12.0
@@ -136,6 +139,15 @@ packages:
       package: omusubiya-packages/cert-manager
       kind: root
       scope: cert-manager
+  omusubiya-packages/chrony:
+    version: 0.9.1
+    digest: sha256:96e5732d412d57efd1e7c4efe6b21f79e5640c2ee4bc0a229b064dd10db6bd0f
+    dependencies: {}
+    runtime: {}
+    instance:
+      package: omusubiya-packages/chrony
+      kind: root
+      scope: chrony
   omusubiya-packages/external-secrets:
     version: 2.12.0
     digest: sha256:741a40b396b07878fd1cb2a0acd699b51a620c5447096f6c4778a27f3696c81f
@@ -295,6 +307,16 @@ instances:
       version: 1.21.2
       digest: sha256:54c08bab2de6c4923c9fd73efcecc9762f0fd866a6e57ea2147b9d4a1d1d4c6d
     runtime: {}
+  chrony:
+    id:
+      package: omusubiya-packages/chrony
+      kind: root
+      scope: chrony
+    artifact:
+      package: omusubiya-packages/chrony
+      version: 0.9.1
+      digest: sha256:96e5732d412d57efd1e7c4efe6b21f79e5640c2ee4bc0a229b064dd10db6bd0f
+    runtime: {}
   external-secrets:
     id:
       package: omusubiya-packages/external-secrets
@@ -358,6 +380,9 @@ images:
     mediaType: application/vnd.oci.image.index.v1+json
   docker.io/library/postgres:16.15-bookworm:
     digest: sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4
+    mediaType: application/vnd.oci.image.index.v1+json
+  docker.io/simonrupf/chronyd:0.9.1:
+    digest: sha256:8ccd8102f09b30246d8f3886a1d4f06052983690907d5b1e30dd723816ed29fc
     mediaType: application/vnd.oci.image.index.v1+json
   ghcr.io/crainte/bifrost:0.1.2:
     digest: sha256:eddcb1dc1901e119026487f074d6b1cdfb543c876cc7428dd4aa93fe90e0e68a
