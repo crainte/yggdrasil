@@ -24,7 +24,10 @@ coordinatorConfig: |
   min_recovery_secs = 30
 
   [coordinator.global]
-  url = "http://lighthouse-global.lighthouse.svc.cluster.local"
+  # Headless: publishes not-yet-ready global pods, so pushes land even when
+  # every global node restarts at once. Global nodes replicate region state
+  # among themselves, so which pod receives does not matter.
+  url = "http://lighthouse-global-headless.lighthouse.svc.cluster.local:8080"
   token_env = "LIGHTHOUSE_REGION_KEY"
   push_secs = 5
 globalConfig: |
