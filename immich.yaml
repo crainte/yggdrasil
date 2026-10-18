@@ -1,0 +1,10 @@
+hostname: immich.itai.moe
+gatewayName: internal
+gatewayNamespace: gateway
+timezone: America/Los_Angeles
+secretStore:
+  name: bitwarden
+  kind: ClusterSecretStore
+libraryStorageSize: 100Gi
+databaseStorageSize: 20Gi
+machineLearningCacheStorageSize: 10Gi

@@ -16,15 +16,16 @@ This document tracks the migration from the legacy `local` cluster to `yggdrasil
 
 | Workload | Disposition | Status | Notes |
 | --- | --- | --- | --- |
+| Gateway front doors | Install | Complete | Internal Gateway `172.16.16.10` and public NAT-target Gateway `172.16.16.11` serve wildcard `*.itai.moe` TLS. Legacy Cilium Ingress remains on `172.16.16.12` for rollback. |
 | Metrics Server | Install | Complete | Metrics Server 0.9.0 runs two anti-affined replicas; Metrics API and `kubectl top` are operational. |
 | Grafana Alloy | Migrate | Complete | Alloy chart 1.13.1 / app v1.20.1; metrics-only; remote write to `10.10.10.189:9090`; no logs or SigNoz. |
 | Chrony/NTP | Replace | Cutover pending | Replacement is healthy at `172.16.16.123`; change clients and observe traffic before retiring `172.16.32.109`. |
-| ntfy | Migrate | Pre-deploy ready | Target is `ntfy.itai.moe`; workload, retained PVC, DNS-01 Certificate, and Cilium Ingress validate. Cloudflare token provisioning and SQLite cutover remain pending. |
+| ntfy | Migrate | Internal route live | `ntfy.itai.moe` routes through the internal Gateway; SQLite data was copied. Client/Cloudflare cutover and legacy retirement remain pending. |
 | Grafana | Migrate | Pending | Preserve required dashboards, data sources, hostname, and persistence. |
 | Authentik | Migrate | Pending | Database is authoritative for internally managed providers, applications, and outposts. Use a supported upgrade path. |
 | Docker Registry | Migrate | Pending | Preserve hostname, credentials, and required image blobs. |
-| Immich | Reprovision | Pending | Build cleanly on Yggdrasil rather than migrating existing application data. |
-| Kener | Replace | Complete | Lighthouse is validated at `lighthouse.itai.moe`; application bugs will be handled independently. Legacy Kener decommissioning remains a cleanup action. |
+| Immich | Reprovision | Deployed, setup pending | Fresh Immich `v3.3.3` serves internal `immich.itai.moe`. Create the admin account, then consider `IMMICH_ALLOW_SETUP=false`. Legacy data is intentionally abandoned; legacy workloads remain until retired. |
+| Kener | Replace | Complete | Lighthouse is validated at `lighthouse.itai.moe` and routes through the public Gateway; application bugs will be handled independently. Legacy Kener decommissioning remains a cleanup action. |
 | SigNoz | Retire | Pending | Do not migrate. Confirm no remaining producers or consumers before removal. |
 | OneDev | Retire | Pending | Test installation only; do not migrate. |
 | MariaDB | Retire candidate | Pending | Home Assistant uses SQLite. Confirm no other consumers before removal. |
@@ -33,6 +34,29 @@ This document tracks the migration from the legacy `local` cluster to `yggdrasil
 | Gluster storage | Retire candidate | Pending | Use currently mounted claims as authority, not historical claims. The 250 GiB `default/home` PVC appears unused. |
 
 ## Completed work
+
+### Gateway API front doors
+
+- Installed official Gateway API v1.6.3 standard CRDs through package `gateway-api@1.6.3`.
+- Upgraded Cilium to 1.20.3 and enabled its Gateway API controller.
+- Package `cilium-gateways@1.0.0` owns Gateways `gateway/internal` (`172.16.16.10`) and `gateway/public` (`172.16.16.11`), both HTTPS-only with the DNS-01 wildcard certificate `gateway/wildcard`.
+- `ntfy.itai.moe` attaches to the internal Gateway; `lighthouse.itai.moe` attaches to the public Gateway. Both routes return HTTP 200 from their selected VIPs.
+- The router must NAT public TCP/443 to `172.16.16.11`; DNS for internal names must resolve to `172.16.16.10`.
+- Cilium 1.20.2 and 1.20.3 produced empty Envoy EDS clusters when an HTTPRoute used a numeric backend port against a named Service port. Packages therefore own Gateway compatibility Services with unnamed ports: `ntfy-gateway-backend`, `lighthouse-gateway-backend`, and `immich-gateway-backend`.
+- The previous shared Cilium Ingress is retained temporarily at `172.16.16.12` for rollback. Remove Ingress resources only after DNS, NAT, and client paths are validated.
+- Cilium Helm values are still operational state, not declarative Yggdrasil desired state; capture them in a Talos/Cilium bootstrap source before rebuilding the cluster.
+
+### Immich reprovision state
+
+- Initially deployed as `immich@3.2.4`, then upgraded to `immich@3.3.3` (no breaking changes in v3.3.0–v3.3.3; same PostgreSQL image). The single-replica server returns 503 briefly during rollouts.
+- Package `immich@3.3.3` creates fresh retained storage: 100 GiB library, 20 GiB PostgreSQL, and 10 GiB ML cache.
+- PostgreSQL uses `ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0`; Valkey is ephemeral.
+- Database credentials come from Bitwarden keys `IMMICH_DB_USERNAME`, `IMMICH_DB_PASSWORD`, and `IMMICH_DB_DATABASE`.
+- The route is internal-only at `immich.itai.moe`.
+- Deployed after the Bitwarden keys were added: ExternalSecret Ready, all four workloads Ready, three Longhorn PVCs Bound.
+- Verified `/api/server/ping` and the web UI return 200 through the internal Gateway, and the public Gateway returns 404 for the host.
+- Database has `vchord 0.4.3`, `vector 0.8.1`, and data checksums on; the server reaches ML (`/ping` returns `pong`).
+- Remaining: initial admin setup, mobile/client access over internal DNS, then retire legacy `local/immich` (PV reclaim policy is `Delete`).
 
 ### Metrics Server
 

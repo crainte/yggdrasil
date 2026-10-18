@@ -53,6 +53,11 @@ packages:
     namespace: ntp
     createNamespace: true
     config: chrony.yaml
+  cilium-gateways:
+    version: "=1.0.0"
+    namespace: gateway
+    createNamespace: true
+    config: cilium-gateways.yaml
   ntfy:
     version: "=2.15.0"
     namespace: ntfy
@@ -64,3 +69,18 @@ packages:
     namespace: lighthouse
     createNamespace: true
     config: lighthouse.yaml
+  immich:
+    version: "=3.3.3"
+    namespace: immich
+    createNamespace: true
+    config: immich.yaml
+  ntfy-route:
+    package: gateway-http-route
+    version: "=1.0.0"
+    namespace: ntfy
+    config: ntfy-route.yaml
+  lighthouse-route:
+    package: gateway-http-route
+    version: "=1.0.0"
+    namespace: lighthouse
+    config: lighthouse-route.yaml

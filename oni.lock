@@ -18,9 +18,15 @@ roots:
   chrony:
     package: omusubiya-packages/chrony
     version: =0.9.1
+  cilium-gateways:
+    package: omusubiya-packages/cilium-gateways
+    version: =1.0.0
   external-secrets:
     package: omusubiya-packages/external-secrets
     version: =2.12.0
+  immich:
+    package: omusubiya-packages/immich
+    version: =3.3.3
   knot-resolver:
     package: omusubiya-packages/knot-resolver
     version: =6.5.1
@@ -30,12 +36,18 @@ roots:
   lighthouse:
     package: lighthouse-packages/lighthouse
     version: =0.1.0
+  lighthouse-route:
+    package: omusubiya-packages/gateway-http-route
+    version: =1.0.0
   metrics-server:
     package: omusubiya-packages/metrics-server
     version: =0.9.0
   ntfy:
     package: omusubiya-packages/ntfy
     version: =2.15.0
+  ntfy-route:
+    package: omusubiya-packages/gateway-http-route
+    version: =1.0.0
   postgresql:
     package: omusubiya-packages/postgresql
     version: =16.15.0
@@ -45,7 +57,7 @@ roots:
 packages:
   lighthouse-packages/lighthouse:
     version: 0.1.0
-    digest: sha256:3e2300112f7bbfa580c9518bc66dd0652551a30e1815140c13e9cf790ebacd1e
+    digest: sha256:e783e6e00de4e81cf711834ff0dab58edc7107d2c95f0fe17662e526678e8b7d
     dependencies: {}
     runtime:
       cert-manager:
@@ -196,6 +208,42 @@ packages:
       package: omusubiya-packages/chrony
       kind: root
       scope: chrony
+  omusubiya-packages/cilium-gateways:
+    version: 1.0.0
+    digest: sha256:be4529a48f4e7b2433a9b5711a9379ea2303d4c5585929ab70a658d030156ecf
+    dependencies: {}
+    runtime:
+      cert-manager:
+        provider: omusubiya-packages/cert-manager
+        version: 1.21.2
+        capability: cert-manager
+        capability_version: 1.21.2
+        constraints:
+        - requirement: ^1.21.0
+          source: package
+        private: false
+      gateway-api:
+        provider: omusubiya-packages/gateway-api
+        version: 1.6.3
+        capability: gateway-api
+        capability_version: 1.6.3
+        constraints:
+        - requirement: ^1.6.3
+          source: package
+        private: false
+      letsencrypt-cloudflare:
+        provider: omusubiya-packages/letsencrypt-cloudflare
+        version: 1.0.0
+        capability: letsencrypt-cloudflare
+        capability_version: 1.0.0
+        constraints:
+        - requirement: ^1.0.0
+          source: package
+        private: false
+    instance:
+      package: omusubiya-packages/cilium-gateways
+      kind: root
+      scope: cilium-gateways
   omusubiya-packages/external-secrets:
     version: 2.12.0
     digest: sha256:741a40b396b07878fd1cb2a0acd699b51a620c5447096f6c4778a27f3696c81f
@@ -205,6 +253,59 @@ packages:
       package: omusubiya-packages/external-secrets
       kind: root
       scope: external-secrets
+  omusubiya-packages/gateway-api:
+    version: 1.6.3
+    digest: sha256:b5596678267a07f6b9751e8877d179c4cd98dddda8ea56af6ece039352c61e57
+    dependencies: {}
+    runtime: {}
+    instance:
+      package: omusubiya-packages/gateway-api
+      kind: shared
+  omusubiya-packages/gateway-http-route:
+    version: 1.0.0
+    digest: sha256:812271340137dfd7af149fbadd94ad32cfbaf116e42f1fc169c66465fc9e1ea3
+    dependencies: {}
+    runtime:
+      gateway-api:
+        provider: omusubiya-packages/gateway-api
+        version: 1.6.3
+        capability: gateway-api
+        capability_version: 1.6.3
+        constraints:
+        - requirement: ^1.6.3
+          source: package
+        private: false
+    instance:
+      package: omusubiya-packages/gateway-http-route
+      kind: root
+      scope: lighthouse-route
+  omusubiya-packages/immich:
+    version: 3.3.3
+    digest: sha256:9cc41a037e34f4ea837f236517d07f7f2aa036b449e0fdcbbda9b7b997e53cdf
+    dependencies: {}
+    runtime:
+      external-secrets:
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
+        private: false
+      gateway-api:
+        provider: omusubiya-packages/gateway-api
+        version: 1.6.3
+        capability: gateway-api
+        capability_version: 1.6.3
+        constraints:
+        - requirement: ^1.6.3
+          source: package
+        private: false
+    instance:
+      package: omusubiya-packages/immich
+      kind: root
+      scope: immich
   omusubiya-packages/knot-resolver:
     version: 6.5.1
     digest: sha256:2139482eb2dc6cd6092ffc225e387c982098da798f527d69cbef4c7368f1b490
@@ -261,7 +362,7 @@ packages:
       scope: metrics-server
   omusubiya-packages/ntfy:
     version: 2.15.0
-    digest: sha256:dca625d3bef0ae38c39160506cae461dc45124de34c9c1c9e7cb2e7c9e357782
+    digest: sha256:5aaa20b7927f51d90bb013bdd095c17c017de09beb1f5d8ebf3c772ae5291b96
     dependencies: {}
     runtime:
       cert-manager:
@@ -437,6 +538,43 @@ instances:
       version: 0.9.1
       digest: sha256:56665f68672f8997e2b7b98993ee3c2a5af17d687f0bfe18742dd90b61668296
     runtime: {}
+  cilium-gateways:
+    id:
+      package: omusubiya-packages/cilium-gateways
+      kind: root
+      scope: cilium-gateways
+    artifact:
+      package: omusubiya-packages/cilium-gateways
+      version: 1.0.0
+      digest: sha256:be4529a48f4e7b2433a9b5711a9379ea2303d4c5585929ab70a658d030156ecf
+    runtime:
+      cert-manager:
+        provider_instance: cert-manager
+        provider: omusubiya-packages/cert-manager
+        version: 1.21.2
+        capability: cert-manager
+        capability_version: 1.21.2
+        constraints:
+        - requirement: ^1.21.0
+          source: package
+      gateway-api:
+        provider_instance: omusubiya-packages/gateway-api
+        provider: omusubiya-packages/gateway-api
+        version: 1.6.3
+        capability: gateway-api
+        capability_version: 1.6.3
+        constraints:
+        - requirement: ^1.6.3
+          source: package
+      letsencrypt-cloudflare:
+        provider_instance: letsencrypt-cloudflare
+        provider: omusubiya-packages/letsencrypt-cloudflare
+        version: 1.0.0
+        capability: letsencrypt-cloudflare
+        capability_version: 1.0.0
+        constraints:
+        - requirement: ^1.0.0
+          source: package
   external-secrets:
     id:
       package: omusubiya-packages/external-secrets
@@ -447,6 +585,34 @@ instances:
       version: 2.12.0
       digest: sha256:741a40b396b07878fd1cb2a0acd699b51a620c5447096f6c4778a27f3696c81f
     runtime: {}
+  immich:
+    id:
+      package: omusubiya-packages/immich
+      kind: root
+      scope: immich
+    artifact:
+      package: omusubiya-packages/immich
+      version: 3.3.3
+      digest: sha256:9cc41a037e34f4ea837f236517d07f7f2aa036b449e0fdcbbda9b7b997e53cdf
+    runtime:
+      external-secrets:
+        provider_instance: external-secrets
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
+      gateway-api:
+        provider_instance: omusubiya-packages/gateway-api
+        provider: omusubiya-packages/gateway-api
+        version: 1.6.3
+        capability: gateway-api
+        capability_version: 1.6.3
+        constraints:
+        - requirement: ^1.6.3
+          source: package
   knot-resolver:
     id:
       package: omusubiya-packages/knot-resolver
@@ -502,7 +668,7 @@ instances:
     artifact:
       package: lighthouse-packages/lighthouse
       version: 0.1.0
-      digest: sha256:3e2300112f7bbfa580c9518bc66dd0652551a30e1815140c13e9cf790ebacd1e
+      digest: sha256:e783e6e00de4e81cf711834ff0dab58edc7107d2c95f0fe17662e526678e8b7d
     runtime:
       cert-manager:
         provider_instance: cert-manager
@@ -531,6 +697,25 @@ instances:
         constraints:
         - requirement: ^1.0.0
           source: package
+  lighthouse-route:
+    id:
+      package: omusubiya-packages/gateway-http-route
+      kind: root
+      scope: lighthouse-route
+    artifact:
+      package: omusubiya-packages/gateway-http-route
+      version: 1.0.0
+      digest: sha256:812271340137dfd7af149fbadd94ad32cfbaf116e42f1fc169c66465fc9e1ea3
+    runtime:
+      gateway-api:
+        provider_instance: omusubiya-packages/gateway-api
+        provider: omusubiya-packages/gateway-api
+        version: 1.6.3
+        capability: gateway-api
+        capability_version: 1.6.3
+        constraints:
+        - requirement: ^1.6.3
+          source: package
   metrics-server:
     id:
       package: omusubiya-packages/metrics-server
@@ -549,7 +734,7 @@ instances:
     artifact:
       package: omusubiya-packages/ntfy
       version: 2.15.0
-      digest: sha256:dca625d3bef0ae38c39160506cae461dc45124de34c9c1c9e7cb2e7c9e357782
+      digest: sha256:5aaa20b7927f51d90bb013bdd095c17c017de09beb1f5d8ebf3c772ae5291b96
     runtime:
       cert-manager:
         provider_instance: cert-manager
@@ -569,6 +754,34 @@ instances:
         constraints:
         - requirement: ^1.0.0
           source: package
+  ntfy-route:
+    id:
+      package: omusubiya-packages/gateway-http-route
+      kind: root
+      scope: ntfy-route
+    artifact:
+      package: omusubiya-packages/gateway-http-route
+      version: 1.0.0
+      digest: sha256:812271340137dfd7af149fbadd94ad32cfbaf116e42f1fc169c66465fc9e1ea3
+    runtime:
+      gateway-api:
+        provider_instance: omusubiya-packages/gateway-api
+        provider: omusubiya-packages/gateway-api
+        version: 1.6.3
+        capability: gateway-api
+        capability_version: 1.6.3
+        constraints:
+        - requirement: ^1.6.3
+          source: package
+  omusubiya-packages/gateway-api:
+    id:
+      package: omusubiya-packages/gateway-api
+      kind: shared
+    artifact:
+      package: omusubiya-packages/gateway-api
+      version: 1.6.3
+      digest: sha256:b5596678267a07f6b9751e8877d179c4cd98dddda8ea56af6ece039352c61e57
+    runtime: {}
   postgresql:
     id:
       package: omusubiya-packages/postgresql
@@ -619,6 +832,9 @@ images:
   docker.io/simonrupf/chronyd:0.9.1:
     digest: sha256:8ccd8102f09b30246d8f3886a1d4f06052983690907d5b1e30dd723816ed29fc
     mediaType: application/vnd.oci.image.index.v1+json
+  docker.io/valkey/valkey:9.1.1:
+    digest: sha256:64e361b630ecf18dff7ca4df6a88e6eafc193687eb48cff2c7e0a293ab67d29a
+    mediaType: application/vnd.oci.image.index.v1+json
   ghcr.io/crainte/bifrost:0.1.2:
     digest: sha256:eddcb1dc1901e119026487f074d6b1cdfb543c876cc7428dd4aa93fe90e0e68a
     mediaType: application/vnd.oci.image.index.v1+json
@@ -630,6 +846,15 @@ images:
     mediaType: application/vnd.oci.image.index.v1+json
   ghcr.io/external-secrets/external-secrets:v2.12.0:
     digest: sha256:7a3c4f7e038fa0f86a3172da19b9388f3f4d846e87e9994ee3474c5b72a9330d
+    mediaType: application/vnd.oci.image.index.v1+json
+  ghcr.io/immich-app/immich-machine-learning:v3.3.3:
+    digest: sha256:73915f07e1f4289ba45b174c58443db74cef47ddf502613f475fc5e52458ea42
+    mediaType: application/vnd.oci.image.index.v1+json
+  ghcr.io/immich-app/immich-server:v3.3.3:
+    digest: sha256:bae7664ff3aa4c2c1fcbdcdd86b40b105643c5f861f3e6a770fc760089f25862
+    mediaType: application/vnd.oci.image.index.v1+json
+  ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0:
+    digest: sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
     mediaType: application/vnd.oci.image.index.v1+json
   quay.io/jetstack/cert-manager-acmesolver:v1.21.2:
     digest: sha256:699b40d622211ab7accad8a21b04c5fbaa1841ef7a12621e8de492dbe27b2503

@@ -1,0 +1,4 @@
+wildcardHostname: '*.itai.moe'
+internalAddress: 172.16.16.10
+publicAddress: 172.16.16.11
+clusterIssuer: letsencrypt

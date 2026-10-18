@@ -1,0 +1,5 @@
+hostname: ntfy.itai.moe
+gatewayName: internal
+gatewayNamespace: gateway
+backendName: ntfy-gateway-backend
+backendPort: 80
