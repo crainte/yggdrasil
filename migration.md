@@ -16,14 +16,15 @@ This document tracks the migration from the legacy `local` cluster to `yggdrasil
 
 | Workload | Disposition | Status | Notes |
 | --- | --- | --- | --- |
+| Metrics Server | Install | Complete | Metrics Server 0.9.0 runs two anti-affined replicas; Metrics API and `kubectl top` are operational. |
 | Grafana Alloy | Migrate | Complete | Alloy chart 1.13.1 / app v1.20.1; metrics-only; remote write to `10.10.10.189:9090`; no logs or SigNoz. |
-| Chrony/NTP | Replace | In progress | Replace legacy `ntp/chronyd`; publish UDP/123 at `172.16.16.123`; validate clients before retiring `172.16.32.109`. |
-| ntfy | Migrate | Pending | Inspect live state, persistence, hostname, and dependencies before packaging. |
+| Chrony/NTP | Replace | Cutover pending | Replacement is healthy at `172.16.16.123`; change clients and observe traffic before retiring `172.16.32.109`. |
+| ntfy | Migrate | Pre-deploy ready | Target is `ntfy.itai.moe`; workload, retained PVC, DNS-01 Certificate, and Cilium Ingress validate. Cloudflare token provisioning and SQLite cutover remain pending. |
 | Grafana | Migrate | Pending | Preserve required dashboards, data sources, hostname, and persistence. |
 | Authentik | Migrate | Pending | Database is authoritative for internally managed providers, applications, and outposts. Use a supported upgrade path. |
 | Docker Registry | Migrate | Pending | Preserve hostname, credentials, and required image blobs. |
 | Immich | Reprovision | Pending | Build cleanly on Yggdrasil rather than migrating existing application data. |
-| Kener | Replace | Pending | A separately developed application will replace it. |
+| Kener | Replace | In progress | Lighthouse package deployed at `lighthouse.itai.moe`; waiting for Bitwarden credentials before workload validation and eventual routing cutover. |
 | SigNoz | Retire | Pending | Do not migrate. Confirm no remaining producers or consumers before removal. |
 | OneDev | Retire | Pending | Test installation only; do not migrate. |
 | MariaDB | Retire candidate | Pending | Home Assistant uses SQLite. Confirm no other consumers before removal. |
@@ -32,6 +33,15 @@ This document tracks the migration from the legacy `local` cluster to `yggdrasil
 | Gluster storage | Retire candidate | Pending | Use currently mounted claims as authority, not historical claims. The 250 GiB `default/home` PVC appears unused. |
 
 ## Completed work
+
+### Metrics Server
+
+- Added Onigiri format-2 package `metrics-server@0.9.0` from the upstream Kubernetes 1.21+ HA manifest.
+- Runs two required-anti-affined replicas with a PDB requiring one available replica.
+- Uses upstream RBAC, APIService registration, probes, resource requests, and hardened container security.
+- The image tag is digest-pinned by `oni.lock`.
+- Talos kubelet certificates do not contain node IP SANs, so the deployment uses `--kubelet-insecure-tls`; service-account authentication and kubelet authorization remain enforced.
+- `v1beta1.metrics.k8s.io` is Available and both `kubectl top nodes` and `kubectl top pods -A` return metrics.
 
 ### Grafana Alloy
 
@@ -86,9 +96,69 @@ Bifrost package `0.1.2` was corrected to declare image tag `0.1.2`; `oni.lock` p
 - [x] Create and validate the Onigiri package using typed Service and NetworkPolicy collections.
 - [x] Lock the tagged image digest.
 - [x] Server-side dry-run against Yggdrasil.
-- [ ] Deploy and verify UDP/123 at `172.16.16.123` from a LAN client.
+- [x] Deploy and verify UDP/123 at `172.16.16.123` from a LAN client.
 - [ ] Change DHCP/NTP consumers to the new address.
 - [ ] Observe traffic and synchronization before retiring legacy `172.16.32.109`.
+
+## ntfy plan
+
+### Legacy state
+
+- ntfy `2.15.0`, one StatefulSet replica.
+- Public hostname `ntfy.hybridoptix.net` through legacy nginx Ingress `172.16.32.106` and Cloudflare.
+- One 1 GiB Longhorn PVC containing `user.db` (users, ACLs, tokens) and `cache.db` (message cache), totaling about 276 KiB.
+- Authentication defaults to deny-all; both databases must be preserved.
+
+### Target state
+
+- Package `ntfy@2.15.0`, one hardened StatefulSet replica with retained 1 GiB storage.
+- Shared Cilium Ingress is enabled at `172.16.16.10` on ports 80/443.
+- Public hostname is `ntfy.itai.moe` through the shared Cilium Ingress.
+- Package-owned typed Certificate and Ingress resources use the reusable `letsencrypt` ClusterIssuer.
+- Shared package `letsencrypt-cloudflare` owns the Cloudflare-token ExternalSecret and DNS-01 ClusterIssuer; its token must exist in Bitwarden as `CLOUDFLARE_API_TOKEN` and be scoped to DNS edit plus zone read for the intended zones.
+
+### Cutover checklist
+
+- [x] Inspect legacy workload and persistent state without exposing user or token values.
+- [x] Enable and verify shared Cilium Ingress at `172.16.16.10`.
+- [x] Build and server-side dry-run the ntfy workload package.
+- [x] Select `ntfy.itai.moe` as the replacement hostname.
+- [x] Author a shared Let's Encrypt DNS-01 ClusterIssuer package.
+- [x] Add typed Certificate and Ingress collections for `ntfy.itai.moe`.
+- [x] Add the zone-scoped `CLOUDFLARE_API_TOKEN` value to Bitwarden Secrets Manager.
+- [x] Deploy ntfy with an empty retained PVC but do not route production traffic.
+- [x] Stop legacy ntfy, copy `user.db` and `cache.db`, and start the replacement; SHA-256 hashes match for both databases.
+- [ ] Validate users, ACLs/tokens, cached messages, publish, subscribe, and `/v1/health`; direct origin health at `172.16.16.10` passes.
+- [ ] Change DNS/Cloudflare routing to the shared ingress and observe traffic. Public requests currently return Cloudflare HTTP 525 because the private ingress has no confirmed Cloudflare-to-origin path.
+- [ ] Retire the legacy StatefulSet only after rollback is no longer needed; it remains healthy for rollback.
+
+## Lighthouse replacement plan
+
+### Target topology
+
+- Lighthouse `0.1.0` is sourced from the project-scoped development repository `../uptime/oni-packages`.
+- Region `us-west` has three regional coordinators in a StatefulSet, each with a retained 5 GiB PVC and required hostname anti-affinity; locality is represented by agent zone `us-pnw`.
+- Three global coordinators run in a separate StatefulSet, each with a retained 1 GiB catalogue PVC and required hostname anti-affinity.
+- One in-cluster agent `yggdrasil-01` represents zone `us-pnw`; future GCP and Unraid agents join region `us-west` with their own locality-specific zones and credentials.
+- Future independent Taiwan regions are named `tw-taoyuan` and `tw-new-taipei` and report to the global tier.
+- `lighthouse.itai.moe` routes only to the global Service through shared Cilium Ingress `172.16.16.10`; public reverse-proxy exposure is deferred.
+- The regional coordinator Service remains cluster-internal until a deliberate remote-agent connectivity design is selected.
+
+### Deployment state
+
+- [x] Author a format-2 Lighthouse package with source fragments.
+- [x] Lock the package and `ghcr.io/crainte/lighthouse:0.1.0` image digest.
+- [x] Pass `oni check` and Kubernetes server-side dry-run.
+- [x] Deploy the namespace, Services, StatefulSets, agent Deployment, Certificate, Ingress, and retained PVCs.
+- [x] Issue the Let's Encrypt certificate for `lighthouse.itai.moe`.
+- [x] Add `LIGHTHOUSE_GLOBAL_PEER_TOKEN` and `LIGHTHOUSE_ADMIN_PASSWORD` to Bitwarden Secrets Manager.
+- [x] Add `LIGHTHOUSE_COORDINATOR_PEER_TOKEN` to Bitwarden Secrets Manager.
+- [x] Register region `us-west` through the global Admin UI and store its one-time registration key as `LIGHTHOUSE_REGION_KEY_US` for the regional coordinators only.
+- [x] Mint the `us-pnw` / `us-west` agent credential through Lighthouse for agent `yggdrasil-01`, then store it as `LIGHTHOUSE_AGENT_TOKEN_YGGDRASIL` in Bitwarden Secrets Manager.
+- [x] Validate all three coordinator peers, all three global peers, the in-cluster agent, and regional-to-global reporting.
+- [ ] Validate the global dashboard through `lighthouse.itai.moe` from the intended internal client path.
+- [ ] Add GCP and Unraid agent credentials and choose a secure route to the regional coordinator API.
+- [ ] Cut over from Kener only after Lighthouse checks and public routing are validated.
 
 ## Validation commands
 

@@ -1,0 +1,10 @@
+hostname: ntfy.itai.moe
+clusterIssuer: letsencrypt
+config: |
+  base-url: "https://ntfy.itai.moe"
+  listen-http: ":8080"
+  cache-file: "/var/cache/ntfy/cache.db"
+  auth-file: "/var/cache/ntfy/user.db"
+  auth-default-access: "deny-all"
+  behind-proxy: true
+  upstream-base-url: "https://ntfy.sh"

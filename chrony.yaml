@@ -13,5 +13,5 @@ config: |
   allow 192.168.0.0/16
   ratelimit
 
-  bindcmdaddress /run/chrony/chronyd.sock
+  bindcmdaddress 127.0.0.1
   cmdallow 127.0.0.1

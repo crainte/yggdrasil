@@ -1,0 +1,53 @@
+hostname: lighthouse.itai.moe
+clusterIssuer: letsencrypt
+secretStore:
+  name: bitwarden
+  kind: ClusterSecretStore
+coordinatorStorageSize: 5Gi
+globalStorageSize: 1Gi
+coordinatorConfig: |
+  [coordinator]
+  listen = "0.0.0.0:8080"
+  db_path = "/data/lighthouse.duckdb"
+  region = "us-west"
+  peers = [
+    "http://lighthouse-coordinator-0.lighthouse-coordinator-headless.lighthouse.svc.cluster.local:8080",
+    "http://lighthouse-coordinator-1.lighthouse-coordinator-headless.lighthouse.svc.cluster.local:8080",
+    "http://lighthouse-coordinator-2.lighthouse-coordinator-headless.lighthouse.svc.cluster.local:8080",
+  ]
+  gossip_interval_secs = 5
+  peer_timeout_secs = 15
+  anti_entropy_secs = 60
+
+  [coordinator.rollup_defaults]
+  min_incident_secs = 60
+  min_recovery_secs = 30
+
+  [coordinator.global]
+  url = "http://lighthouse-global.lighthouse.svc.cluster.local"
+  token_env = "LIGHTHOUSE_REGION_KEY"
+  push_secs = 5
+globalConfig: |
+  [global]
+  listen = "0.0.0.0:8080"
+  db_path = "/data/lighthouse.duckdb"
+  secure_cookies = true
+  trusted_proxies = ["10.0.0.0/8"]
+  region_staleness_secs = 30
+  peers = [
+    "http://lighthouse-global-0.lighthouse-global-headless.lighthouse.svc.cluster.local:8080",
+    "http://lighthouse-global-1.lighthouse-global-headless.lighthouse.svc.cluster.local:8080",
+    "http://lighthouse-global-2.lighthouse-global-headless.lighthouse.svc.cluster.local:8080",
+  ]
+  gossip_interval_secs = 5
+  peer_timeout_secs = 15
+  anti_entropy_secs = 30
+agentConfig: |
+  [agent]
+  coordinator_url = [
+    "http://lighthouse-coordinator-0.lighthouse-coordinator-headless.lighthouse.svc.cluster.local:8080",
+    "http://lighthouse-coordinator-1.lighthouse-coordinator-headless.lighthouse.svc.cluster.local:8080",
+    "http://lighthouse-coordinator-2.lighthouse-coordinator-headless.lighthouse.svc.cluster.local:8080",
+  ]
+  agent_id = "yggdrasil-01"
+  flush_secs = 5

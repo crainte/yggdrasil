@@ -1,6 +1,12 @@
 platforms:
   kubernetes: ["1.36"]
+repositories:
+  lighthouse-dev:
+    path: ../uptime/oni-packages
 packages:
+  metrics-server:
+    version: "=0.9.0"
+    namespace: kube-system
   cert-manager:
     version: "=1.21.2"
     namespace: cert-manager
@@ -16,6 +22,10 @@ packages:
     version: "=1.0.0"
     namespace: external-secrets
     config: bitwarden-secret-store.yaml
+  letsencrypt-cloudflare:
+    version: "=1.0.0"
+    namespace: cert-manager
+    config: letsencrypt-cloudflare.yaml
   bifrost:
     version: "=0.1.2"
     namespace: dns
@@ -43,3 +53,14 @@ packages:
     namespace: ntp
     createNamespace: true
     config: chrony.yaml
+  ntfy:
+    version: "=2.15.0"
+    namespace: ntfy
+    createNamespace: true
+    config: ntfy.yaml
+  lighthouse:
+    package: lighthouse-dev/lighthouse
+    version: "=0.1.0"
+    namespace: lighthouse
+    createNamespace: true
+    config: lighthouse.yaml

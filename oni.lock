@@ -24,6 +24,18 @@ roots:
   knot-resolver:
     package: omusubiya-packages/knot-resolver
     version: =6.5.1
+  letsencrypt-cloudflare:
+    package: omusubiya-packages/letsencrypt-cloudflare
+    version: =1.0.0
+  lighthouse:
+    package: lighthouse-packages/lighthouse
+    version: =0.1.0
+  metrics-server:
+    package: omusubiya-packages/metrics-server
+    version: =0.9.0
+  ntfy:
+    package: omusubiya-packages/ntfy
+    version: =2.15.0
   postgresql:
     package: omusubiya-packages/postgresql
     version: =16.15.0
@@ -31,6 +43,42 @@ roots:
     package: omusubiya-packages/postgresql-credentials
     version: =1.0.0
 packages:
+  lighthouse-packages/lighthouse:
+    version: 0.1.0
+    digest: sha256:3e2300112f7bbfa580c9518bc66dd0652551a30e1815140c13e9cf790ebacd1e
+    dependencies: {}
+    runtime:
+      cert-manager:
+        provider: omusubiya-packages/cert-manager
+        version: 1.21.2
+        capability: cert-manager
+        capability_version: 1.21.2
+        constraints:
+        - requirement: ^1.21.0
+          source: package
+        private: false
+      external-secrets:
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
+        private: false
+      letsencrypt-cloudflare:
+        provider: omusubiya-packages/letsencrypt-cloudflare
+        version: 1.0.0
+        capability: letsencrypt-cloudflare
+        capability_version: 1.0.0
+        constraints:
+        - requirement: ^1.0.0
+          source: package
+        private: false
+    instance:
+      package: lighthouse-packages/lighthouse
+      kind: root
+      scope: lighthouse
   omusubiya-packages/alloy:
     version: 1.13.1
     digest: sha256:d7ed870f60e9428edf5bfa4e7a7a9c320f45a5d5edbd28c7bb84498d3ec2ee6a
@@ -141,7 +189,7 @@ packages:
       scope: cert-manager
   omusubiya-packages/chrony:
     version: 0.9.1
-    digest: sha256:96e5732d412d57efd1e7c4efe6b21f79e5640c2ee4bc0a229b064dd10db6bd0f
+    digest: sha256:56665f68672f8997e2b7b98993ee3c2a5af17d687f0bfe18742dd90b61668296
     dependencies: {}
     runtime: {}
     instance:
@@ -166,6 +214,78 @@ packages:
       package: omusubiya-packages/knot-resolver
       kind: root
       scope: knot-resolver
+  omusubiya-packages/letsencrypt-cloudflare:
+    version: 1.0.0
+    digest: sha256:c74f3e9cd178a76e3a02802744de46185487270b3b36678f23ed81c52bfb260f
+    dependencies: {}
+    runtime:
+      bitwarden-secret-store:
+        provider: omusubiya-packages/bitwarden-secret-store
+        version: 1.0.0
+        capability: bitwarden-secret-store
+        capability_version: 1.0.0
+        constraints:
+        - requirement: ^1.0.0
+          source: package
+        private: false
+      cert-manager:
+        provider: omusubiya-packages/cert-manager
+        version: 1.21.2
+        capability: cert-manager
+        capability_version: 1.21.2
+        constraints:
+        - requirement: ^1.21.0
+          source: package
+        private: false
+      external-secrets:
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
+        private: false
+    instance:
+      package: omusubiya-packages/letsencrypt-cloudflare
+      kind: root
+      scope: letsencrypt-cloudflare
+  omusubiya-packages/metrics-server:
+    version: 0.9.0
+    digest: sha256:fdb410b3f5bf59f053369cc99e6bd4c87c14459a35fe56bded76d36a7ebc9ff9
+    dependencies: {}
+    runtime: {}
+    instance:
+      package: omusubiya-packages/metrics-server
+      kind: root
+      scope: metrics-server
+  omusubiya-packages/ntfy:
+    version: 2.15.0
+    digest: sha256:dca625d3bef0ae38c39160506cae461dc45124de34c9c1c9e7cb2e7c9e357782
+    dependencies: {}
+    runtime:
+      cert-manager:
+        provider: omusubiya-packages/cert-manager
+        version: 1.21.2
+        capability: cert-manager
+        capability_version: 1.21.2
+        constraints:
+        - requirement: ^1.21.0
+          source: package
+        private: false
+      letsencrypt-cloudflare:
+        provider: omusubiya-packages/letsencrypt-cloudflare
+        version: 1.0.0
+        capability: letsencrypt-cloudflare
+        capability_version: 1.0.0
+        constraints:
+        - requirement: ^1.0.0
+          source: package
+        private: false
+    instance:
+      package: omusubiya-packages/ntfy
+      kind: root
+      scope: ntfy
   omusubiya-packages/postgresql:
     version: 16.15.0
     digest: sha256:f724d72930fd11a3cf4d25c0bcfa1ab55a1a13e28deb788029d6b7ec0843bdaa
@@ -315,7 +435,7 @@ instances:
     artifact:
       package: omusubiya-packages/chrony
       version: 0.9.1
-      digest: sha256:96e5732d412d57efd1e7c4efe6b21f79e5640c2ee4bc0a229b064dd10db6bd0f
+      digest: sha256:56665f68672f8997e2b7b98993ee3c2a5af17d687f0bfe18742dd90b61668296
     runtime: {}
   external-secrets:
     id:
@@ -337,6 +457,118 @@ instances:
       version: 6.5.1
       digest: sha256:2139482eb2dc6cd6092ffc225e387c982098da798f527d69cbef4c7368f1b490
     runtime: {}
+  letsencrypt-cloudflare:
+    id:
+      package: omusubiya-packages/letsencrypt-cloudflare
+      kind: root
+      scope: letsencrypt-cloudflare
+    artifact:
+      package: omusubiya-packages/letsencrypt-cloudflare
+      version: 1.0.0
+      digest: sha256:c74f3e9cd178a76e3a02802744de46185487270b3b36678f23ed81c52bfb260f
+    runtime:
+      bitwarden-secret-store:
+        provider_instance: bitwarden-secret-store
+        provider: omusubiya-packages/bitwarden-secret-store
+        version: 1.0.0
+        capability: bitwarden-secret-store
+        capability_version: 1.0.0
+        constraints:
+        - requirement: ^1.0.0
+          source: package
+      cert-manager:
+        provider_instance: cert-manager
+        provider: omusubiya-packages/cert-manager
+        version: 1.21.2
+        capability: cert-manager
+        capability_version: 1.21.2
+        constraints:
+        - requirement: ^1.21.0
+          source: package
+      external-secrets:
+        provider_instance: external-secrets
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
+  lighthouse:
+    id:
+      package: lighthouse-packages/lighthouse
+      kind: root
+      scope: lighthouse
+    artifact:
+      package: lighthouse-packages/lighthouse
+      version: 0.1.0
+      digest: sha256:3e2300112f7bbfa580c9518bc66dd0652551a30e1815140c13e9cf790ebacd1e
+    runtime:
+      cert-manager:
+        provider_instance: cert-manager
+        provider: omusubiya-packages/cert-manager
+        version: 1.21.2
+        capability: cert-manager
+        capability_version: 1.21.2
+        constraints:
+        - requirement: ^1.21.0
+          source: package
+      external-secrets:
+        provider_instance: external-secrets
+        provider: omusubiya-packages/external-secrets
+        version: 2.12.0
+        capability: external-secrets
+        capability_version: 2.12.0
+        constraints:
+        - requirement: ^2.12.0
+          source: package
+      letsencrypt-cloudflare:
+        provider_instance: letsencrypt-cloudflare
+        provider: omusubiya-packages/letsencrypt-cloudflare
+        version: 1.0.0
+        capability: letsencrypt-cloudflare
+        capability_version: 1.0.0
+        constraints:
+        - requirement: ^1.0.0
+          source: package
+  metrics-server:
+    id:
+      package: omusubiya-packages/metrics-server
+      kind: root
+      scope: metrics-server
+    artifact:
+      package: omusubiya-packages/metrics-server
+      version: 0.9.0
+      digest: sha256:fdb410b3f5bf59f053369cc99e6bd4c87c14459a35fe56bded76d36a7ebc9ff9
+    runtime: {}
+  ntfy:
+    id:
+      package: omusubiya-packages/ntfy
+      kind: root
+      scope: ntfy
+    artifact:
+      package: omusubiya-packages/ntfy
+      version: 2.15.0
+      digest: sha256:dca625d3bef0ae38c39160506cae461dc45124de34c9c1c9e7cb2e7c9e357782
+    runtime:
+      cert-manager:
+        provider_instance: cert-manager
+        provider: omusubiya-packages/cert-manager
+        version: 1.21.2
+        capability: cert-manager
+        capability_version: 1.21.2
+        constraints:
+        - requirement: ^1.21.0
+          source: package
+      letsencrypt-cloudflare:
+        provider_instance: letsencrypt-cloudflare
+        provider: omusubiya-packages/letsencrypt-cloudflare
+        version: 1.0.0
+        capability: letsencrypt-cloudflare
+        capability_version: 1.0.0
+        constraints:
+        - requirement: ^1.0.0
+          source: package
   postgresql:
     id:
       package: omusubiya-packages/postgresql
@@ -372,6 +604,9 @@ platforms:
       digest: sha256:ff6746ae6a6080d08fd8db38ca594394e036294ed4b8f401368e1b717378bef9
       source: onigiri-schema-registry
 images:
+  docker.io/binwiederhier/ntfy:v2.15.0:
+    digest: sha256:aa10e84da624f65be107f9317dbf6e212fa812e0ebf62e74d032d0762eccc930
+    mediaType: application/vnd.docker.distribution.manifest.list.v2+json
   docker.io/cznic/knot-resolver:v6.5.0:
     digest: sha256:b2422a58c6b6ab863f24f9e80f65677ae45dcbe0ed9474ced8cb32453f5c49e0
     mediaType: application/vnd.oci.image.index.v1+json
@@ -386,6 +621,9 @@ images:
     mediaType: application/vnd.oci.image.index.v1+json
   ghcr.io/crainte/bifrost:0.1.2:
     digest: sha256:eddcb1dc1901e119026487f074d6b1cdfb543c876cc7428dd4aa93fe90e0e68a
+    mediaType: application/vnd.oci.image.index.v1+json
+  ghcr.io/crainte/lighthouse:0.1.0:
+    digest: sha256:d72a198eeaaf37b5c0a9cbd63d0750c9256c663d393e89801eb2258d70325909
     mediaType: application/vnd.oci.image.index.v1+json
   ghcr.io/external-secrets/bitwarden-sdk-server:v0.8.1:
     digest: sha256:d2266559f57eff819aab5016c565f9e203895850b0d8a1ea8fc340fad34f4a10
@@ -407,4 +645,7 @@ images:
     mediaType: application/vnd.docker.distribution.manifest.list.v2+json
   quay.io/prometheus-operator/prometheus-config-reloader:v0.94.0:
     digest: sha256:142a1f11df8dd165f00375b0b1826aecb9c9adeb05c39855893138d7c7575ff7
+    mediaType: application/vnd.docker.distribution.manifest.list.v2+json
+  registry.k8s.io/metrics-server/metrics-server:v0.9.0:
+    digest: sha256:d9862115e7c7881280d3d75ca26bda8ffc0fc213315979575bf23ce9826205c0
     mediaType: application/vnd.docker.distribution.manifest.list.v2+json

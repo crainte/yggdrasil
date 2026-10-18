@@ -1,0 +1,5 @@
+email: crainte@hybridoptix.net
+secretStore:
+  name: bitwarden
+  kind: ClusterSecretStore
+apiTokenRemoteKey: CLOUDFLARE_API_TOKEN
