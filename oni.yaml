@@ -5,18 +5,18 @@ repositories:
     path: ../uptime/oni-packages
 packages:
   metrics-server:
-    version: "=0.9.0"
+    version: "=1.0.0"
     namespace: kube-system
   cert-manager:
-    version: "=1.21.2"
+    version: "=1.0.0"
     namespace: cert-manager
     createNamespace: true
   external-secrets:
-    version: "=2.12.0"
+    version: "=1.0.0"
     namespace: external-secrets
     createNamespace: true
   bitwarden-sdk-server:
-    version: "=0.8.1"
+    version: "=1.0.0"
     namespace: external-secrets
   bitwarden-secret-store:
     version: "=1.0.0"
@@ -27,7 +27,7 @@ packages:
     namespace: cert-manager
     config: letsencrypt-cloudflare.yaml
   bifrost:
-    version: "=0.1.2"
+    version: "=1.0.0"
     namespace: dns
     config: bifrost.yaml
   postgresql-credentials:
@@ -35,21 +35,21 @@ packages:
     namespace: infra
     config: postgresql-credentials.yaml
   postgresql:
-    version: "=16.15.0"
+    version: "=1.0.0"
     namespace: infra
     config: postgresql.yaml
   knot-resolver:
-    version: "=6.5.1"
+    version: "=1.0.0"
     namespace: dns
     createNamespace: true
     config: knot-resolver.yaml
   alloy:
-    version: "=1.13.1"
+    version: "=1.0.0"
     namespace: monitoring
     createNamespace: true
     config: alloy.yaml
   chrony:
-    version: "=0.9.1"
+    version: "=1.0.0"
     namespace: ntp
     createNamespace: true
     config: chrony.yaml
@@ -59,18 +59,18 @@ packages:
     createNamespace: true
     config: cilium-gateways.yaml
   ntfy:
-    version: "=2.15.0"
+    version: "=1.0.0"
     namespace: ntfy
     createNamespace: true
     config: ntfy.yaml
   lighthouse:
     package: lighthouse-dev/lighthouse
-    version: "=0.1.0"
+    version: "=1.0.0"
     namespace: lighthouse
     createNamespace: true
     config: lighthouse.yaml
   immich:
-    version: "=3.3.3"
+    version: "=1.0.0"
     namespace: immich
     createNamespace: true
     config: immich.yaml
