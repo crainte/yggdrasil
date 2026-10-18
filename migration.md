@@ -24,7 +24,7 @@ This document tracks the migration from the legacy `local` cluster to `yggdrasil
 | Authentik | Migrate | Pending | Database is authoritative for internally managed providers, applications, and outposts. Use a supported upgrade path. |
 | Docker Registry | Migrate | Pending | Preserve hostname, credentials, and required image blobs. |
 | Immich | Reprovision | Pending | Build cleanly on Yggdrasil rather than migrating existing application data. |
-| Kener | Replace | In progress | Lighthouse package deployed at `lighthouse.itai.moe`; waiting for Bitwarden credentials before workload validation and eventual routing cutover. |
+| Kener | Replace | Complete | Lighthouse is validated at `lighthouse.itai.moe`; application bugs will be handled independently. Legacy Kener decommissioning remains a cleanup action. |
 | SigNoz | Retire | Pending | Do not migrate. Confirm no remaining producers or consumers before removal. |
 | OneDev | Retire | Pending | Test installation only; do not migrate. |
 | MariaDB | Retire candidate | Pending | Home Assistant uses SQLite. Confirm no other consumers before removal. |
@@ -156,9 +156,10 @@ Bifrost package `0.1.2` was corrected to declare image tag `0.1.2`; `oni.lock` p
 - [x] Register region `us-west` through the global Admin UI and store its one-time registration key as `LIGHTHOUSE_REGION_KEY_US` for the regional coordinators only.
 - [x] Mint the `us-pnw` / `us-west` agent credential through Lighthouse for agent `yggdrasil-01`, then store it as `LIGHTHOUSE_AGENT_TOKEN_YGGDRASIL` in Bitwarden Secrets Manager.
 - [x] Validate all three coordinator peers, all three global peers, the in-cluster agent, and regional-to-global reporting.
-- [ ] Validate the global dashboard through `lighthouse.itai.moe` from the intended internal client path.
+- [x] Validate the global dashboard through `lighthouse.itai.moe` from the intended internal client path.
 - [ ] Add GCP and Unraid agent credentials and choose a secure route to the regional coordinator API.
-- [ ] Cut over from Kener only after Lighthouse checks and public routing are validated.
+- [x] Complete the Kener replacement after Lighthouse checks and routing validation; application bugs are tracked independently.
+- [ ] Decommission the legacy Kener Deployment and retain or remove its PVCs according to the chosen rollback window.
 
 ## Validation commands
 
