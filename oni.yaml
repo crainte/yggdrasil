@@ -5,82 +5,82 @@ repositories:
     path: ../uptime/oni-packages
 packages:
   metrics-server:
-    version: "=1.0.0"
+    version: "^0.9"
     namespace: kube-system
   cert-manager:
-    version: "=1.0.0"
+    version: "^1.21"
     namespace: cert-manager
     createNamespace: true
   external-secrets:
-    version: "=1.0.0"
+    version: "^2.12"
     namespace: external-secrets
     createNamespace: true
   bitwarden-sdk-server:
-    version: "=1.0.0"
+    version: "^0.8"
     namespace: external-secrets
   bitwarden-secret-store:
-    version: "=1.0.0"
+    revision: "^1.0"
     namespace: external-secrets
     config: bitwarden-secret-store.yaml
   letsencrypt-cloudflare:
-    version: "=1.0.0"
+    revision: "^1.0"
     namespace: cert-manager
     config: letsencrypt-cloudflare.yaml
   bifrost:
-    version: "=1.0.0"
+    version: "^0.1"
     namespace: dns
     config: bifrost.yaml
   postgresql-credentials:
-    version: "=1.0.0"
+    revision: "^1.0"
     namespace: infra
     config: postgresql-credentials.yaml
   postgresql:
-    version: "=1.0.0"
+    version: "^16"
     namespace: infra
     config: postgresql.yaml
   knot-resolver:
-    version: "=1.0.0"
+    version: "^6.5"
     namespace: dns
     createNamespace: true
     config: knot-resolver.yaml
   alloy:
-    version: "=1.0.0"
+    version: "^1.20"
     namespace: monitoring
     createNamespace: true
     config: alloy.yaml
   chrony:
-    version: "=1.0.0"
+    version: "^4.8"
     namespace: ntp
     createNamespace: true
     config: chrony.yaml
   cilium-gateways:
-    version: "=1.0.0"
+    revision: "^1.0"
     namespace: gateway
     createNamespace: true
     config: cilium-gateways.yaml
   ntfy:
-    version: "=1.0.0"
+    version: "^2.15"
     namespace: ntfy
     createNamespace: true
     config: ntfy.yaml
   lighthouse:
     package: lighthouse-dev/lighthouse
-    version: "=1.0.0"
+    version: "^0.1"
     namespace: lighthouse
     createNamespace: true
     config: lighthouse.yaml
   immich:
-    version: "=1.0.0"
+    version: "^3.3"
     namespace: immich
     createNamespace: true
     config: immich.yaml
   ntfy-route:
     package: gateway-http-route
-    version: "=1.0.0"
+    revision: "^1.0"
     namespace: ntfy
     config: ntfy-route.yaml
   lighthouse-route:
     package: gateway-http-route
-    version: "=1.0.0"
+    revision: "^1.0"
     namespace: lighthouse
     config: lighthouse-route.yaml

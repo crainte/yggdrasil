@@ -1,88 +1,87 @@
-version: 15
+version: 16
 roots:
   alloy:
     package: omusubiya-packages/alloy
-    version: =1.0.0
+    version: ^1.20
   bifrost:
     package: omusubiya-packages/bifrost
-    version: =1.0.0
+    version: ^0.1
   bitwarden-sdk-server:
     package: omusubiya-packages/bitwarden-sdk-server
-    version: =1.0.0
+    version: ^0.8
   bitwarden-secret-store:
     package: omusubiya-packages/bitwarden-secret-store
-    version: =1.0.0
+    revision: ^1.0
   cert-manager:
     package: omusubiya-packages/cert-manager
-    version: =1.0.0
+    version: ^1.21
   chrony:
     package: omusubiya-packages/chrony
-    version: =1.0.0
+    version: ^4.8
   cilium-gateways:
     package: omusubiya-packages/cilium-gateways
-    version: =1.0.0
+    revision: ^1.0
   external-secrets:
     package: omusubiya-packages/external-secrets
-    version: =1.0.0
+    version: ^2.12
   immich:
     package: omusubiya-packages/immich
-    version: =1.0.0
+    version: ^3.3
   knot-resolver:
     package: omusubiya-packages/knot-resolver
-    version: =1.0.0
+    version: ^6.5
   letsencrypt-cloudflare:
     package: omusubiya-packages/letsencrypt-cloudflare
-    version: =1.0.0
+    revision: ^1.0
   lighthouse:
     package: lighthouse-packages/lighthouse
-    version: =1.0.0
+    version: ^0.1
   lighthouse-route:
     package: omusubiya-packages/gateway-http-route
-    version: =1.0.0
+    revision: ^1.0
   metrics-server:
     package: omusubiya-packages/metrics-server
-    version: =1.0.0
+    version: ^0.9
   ntfy:
     package: omusubiya-packages/ntfy
-    version: =1.0.0
+    version: ^2.15
   ntfy-route:
     package: omusubiya-packages/gateway-http-route
-    version: =1.0.0
+    revision: ^1.0
   postgresql:
     package: omusubiya-packages/postgresql
-    version: =1.0.0
+    version: ^16
   postgresql-credentials:
     package: omusubiya-packages/postgresql-credentials
-    version: =1.0.0
+    revision: ^1.0
 packages:
   lighthouse-packages/lighthouse:
-    version: 1.0.0
-    application:
-      version: 0.1.0
-    digest: sha256:47b5f54b0d8b9cdb7e246680ac835cadc07e669c8946c08e34aec751e7d13539
+    version: 0.1.0
+    revision: 1.0.0
+    digest: sha256:0dc142d3de030d92120b34945b1f269bd4b5c95f31a088aecfe62a3b68b8db29
     dependencies: {}
     runtime:
       cert-manager:
         provider: omusubiya-packages/cert-manager
-        version: 1.0.0
+        revision: 1.0.0
         capability: cert-manager
-        capability_version: 1.0.0
+        capability_version: 1.21.2
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.21.0
           source: package
         private: false
       external-secrets:
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
         private: false
       letsencrypt-cloudflare:
         provider: omusubiya-packages/letsencrypt-cloudflare
-        version: 1.0.0
+        revision: 1.0.0
         capability: letsencrypt-cloudflare
         capability_version: 1.0.0
         constraints:
@@ -94,10 +93,9 @@ packages:
       kind: root
       scope: lighthouse
   omusubiya-packages/alloy:
-    version: 1.0.0
-    application:
-      version: 1.20.1
-    digest: sha256:568b687a8558c82bcf2e705054e4a1573b3435d7056a4f59d128f6fd52219d09
+    version: 1.20.1
+    revision: 1.0.0
+    digest: sha256:c4240817ad68b1064c7b916df9f239411484294e120d05754505c69bc857dce2
     dependencies: {}
     runtime: {}
     instance:
@@ -105,33 +103,32 @@ packages:
       kind: root
       scope: alloy
   omusubiya-packages/bifrost:
-    version: 1.0.0
-    application:
-      version: 0.1.2
-    digest: sha256:6a0a73bad6ebc3309b0147d2f7776a7440ce9c73e2933dc29680026596835316
+    version: 0.1.2
+    revision: 1.0.0
+    digest: sha256:f2fc7913eb5eed566e1f800d99894fb7d4eca1ab38461d0ccb2cb0f8fdf68509
     dependencies: {}
     runtime:
       external-secrets:
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
         private: false
       postgresql:
         provider: omusubiya-packages/postgresql
-        version: 1.0.0
+        revision: 1.0.0
         capability: postgresql
-        capability_version: 1.0.0
+        capability_version: 16.15.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^16
           source: package
         private: false
       recursive-dns:
         provider: omusubiya-packages/knot-resolver
-        version: 1.0.0
+        revision: 1.0.0
         capability: recursive-dns
         capability_version: 1.0.0
         constraints:
@@ -143,28 +140,27 @@ packages:
       kind: root
       scope: bifrost
   omusubiya-packages/bitwarden-sdk-server:
-    version: 1.0.0
-    application:
-      version: 0.8.1
-    digest: sha256:3998c51b059fdb077314341fb5a6ed2c7a383243c1a1d1cf9e7e3cd8b4cdf5ca
+    version: 0.8.1
+    revision: 1.0.0
+    digest: sha256:48b364710b65f659b355692a8ccb943bc198ee338b9fcfc8a8df7174b69a71a2
     dependencies: {}
     runtime:
       cert-manager:
         provider: omusubiya-packages/cert-manager
-        version: 1.0.0
+        revision: 1.0.0
         capability: cert-manager
-        capability_version: 1.0.0
+        capability_version: 1.21.2
         constraints:
         - requirement: '>=1'
           source: package
         private: false
       external-secrets:
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
         private: false
     instance:
@@ -172,28 +168,27 @@ packages:
       kind: root
       scope: bitwarden-sdk-server
   omusubiya-packages/bitwarden-secret-store:
-    version: 1.0.0
-    application:
-      none: true
-    digest: sha256:811b6cabe52b23601b8583129f54bb160a1870aec460850aacb1a35a739c078f
+    revision: 1.0.0
+    application: none
+    digest: sha256:9fafb66a4eea43f538a33ceb4f8cdeb1af5f3c8166661cd4eb7f306db00ed9b4
     dependencies: {}
     runtime:
       bitwarden-sdk-server:
         provider: omusubiya-packages/bitwarden-sdk-server
-        version: 1.0.0
+        revision: 1.0.0
         capability: bitwarden-sdk-server
-        capability_version: 1.0.0
+        capability_version: 0.8.1
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^0.8
           source: package
         private: false
       external-secrets:
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
         private: false
     instance:
@@ -201,10 +196,9 @@ packages:
       kind: root
       scope: bitwarden-secret-store
   omusubiya-packages/cert-manager:
-    version: 1.0.0
-    application:
-      version: 1.21.2
-    digest: sha256:0cf60da3d60ca8e6c0a8dcb595311c99845a2e90bd9f96a6d5f006bf83e1124c
+    version: 1.21.2
+    revision: 1.0.0
+    digest: sha256:428c93a057d092f7a36929ecb86a70a0bb05a21b6996ccaec9a20890769be749
     dependencies: {}
     runtime: {}
     instance:
@@ -212,10 +206,9 @@ packages:
       kind: root
       scope: cert-manager
   omusubiya-packages/chrony:
-    version: 1.0.0
-    application:
-      version: '4.8'
-    digest: sha256:0acbc4f9dcb14f18fb2686ff0e43acdd68004475323a275c9ee9185042f45c65
+    version: '4.8'
+    revision: 1.0.0
+    digest: sha256:b09f72fe0dccd891f6ab12e6644b21fdb1b0013d9b5baa6b6e606e89546a8698
     dependencies: {}
     runtime: {}
     instance:
@@ -223,33 +216,32 @@ packages:
       kind: root
       scope: chrony
   omusubiya-packages/cilium-gateways:
-    version: 1.0.0
-    application:
-      none: true
-    digest: sha256:fdcfd788bb9c63bfa9059603cc806440f3e8da9bbb723ffcee5852c358835ca1
+    revision: 1.0.0
+    application: none
+    digest: sha256:81097ebcb090ead1bc5af1edee6acd0a2264292ea6a8ac3bd2bf76d52cedd977
     dependencies: {}
     runtime:
       cert-manager:
         provider: omusubiya-packages/cert-manager
-        version: 1.0.0
+        revision: 1.0.0
         capability: cert-manager
-        capability_version: 1.0.0
+        capability_version: 1.21.2
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.21.0
           source: package
         private: false
       gateway-api:
         provider: omusubiya-packages/gateway-api
-        version: 1.0.0
+        revision: 1.0.0
         capability: gateway-api
-        capability_version: 1.0.0
+        capability_version: 1.6.3
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.6.3
           source: package
         private: false
       letsencrypt-cloudflare:
         provider: omusubiya-packages/letsencrypt-cloudflare
-        version: 1.0.0
+        revision: 1.0.0
         capability: letsencrypt-cloudflare
         capability_version: 1.0.0
         constraints:
@@ -261,10 +253,9 @@ packages:
       kind: root
       scope: cilium-gateways
   omusubiya-packages/external-secrets:
-    version: 1.0.0
-    application:
-      version: 2.12.0
-    digest: sha256:e2bc516717235390162a0f0f5e11788489f95b9793fbaaccdefc9a572483c92f
+    version: 2.12.0
+    revision: 1.0.0
+    digest: sha256:0eb8c03ead44e637b15b1d4d11d8122b217b5ea7d67fcdfc6a19b8c4b9585519
     dependencies: {}
     runtime: {}
     instance:
@@ -272,29 +263,27 @@ packages:
       kind: root
       scope: external-secrets
   omusubiya-packages/gateway-api:
-    version: 1.0.0
-    application:
-      version: 1.6.3
-    digest: sha256:bc0e2ace7e4d606e21ba92379e4ea4ddfef15d688a7acb44c63d0cd01a4745de
+    version: 1.6.3
+    revision: 1.0.0
+    digest: sha256:135482db81a81f63c2211cfe8ded131ad8f458a09b4f1169c7f3b8cf0c98b9fd
     dependencies: {}
     runtime: {}
     instance:
       package: omusubiya-packages/gateway-api
       kind: shared
   omusubiya-packages/gateway-http-route:
-    version: 1.0.0
-    application:
-      none: true
-    digest: sha256:a541aa9224af6f135150ed9aa7ec70e6ea128ea7d53a9d19f0395a002eff831a
+    revision: 1.0.0
+    application: none
+    digest: sha256:92e95669aedeab45835dfa7b54187fcd85691fb4da3f931391ff7b5328e896f1
     dependencies: {}
     runtime:
       gateway-api:
         provider: omusubiya-packages/gateway-api
-        version: 1.0.0
+        revision: 1.0.0
         capability: gateway-api
-        capability_version: 1.0.0
+        capability_version: 1.6.3
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.6.3
           source: package
         private: false
     instance:
@@ -302,28 +291,27 @@ packages:
       kind: root
       scope: lighthouse-route
   omusubiya-packages/immich:
-    version: 1.0.0
-    application:
-      version: 3.3.3
-    digest: sha256:7efab8091e12c3406f968d5a0854986328bf86646234555ea159a40fe52716dc
+    version: 3.3.3
+    revision: 1.0.0
+    digest: sha256:f03f72726451c07d0569d87c6e4c07f7fa3be57e4ec1527878cec513f25f7c00
     dependencies: {}
     runtime:
       external-secrets:
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
         private: false
       gateway-api:
         provider: omusubiya-packages/gateway-api
-        version: 1.0.0
+        revision: 1.0.0
         capability: gateway-api
-        capability_version: 1.0.0
+        capability_version: 1.6.3
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.6.3
           source: package
         private: false
     instance:
@@ -331,10 +319,9 @@ packages:
       kind: root
       scope: immich
   omusubiya-packages/knot-resolver:
-    version: 1.0.0
-    application:
-      version: 6.5.0
-    digest: sha256:3b0e70a52129396f7338410a81be8fef610564ff472e0fe273b0b2807030339f
+    version: 6.5.0
+    revision: 1.0.0
+    digest: sha256:3dea76d9f53324ae2a2ef4b961d49615f1fc98d91cd7c2246d504491fd7d8ade
     dependencies: {}
     runtime: {}
     instance:
@@ -342,15 +329,14 @@ packages:
       kind: root
       scope: knot-resolver
   omusubiya-packages/letsencrypt-cloudflare:
-    version: 1.0.0
-    application:
-      none: true
-    digest: sha256:3a76fcbe5e18f1131c7fb788bcd9b48bab0b65eaaf58a1aa16d96e4db02f67d5
+    revision: 1.0.0
+    application: none
+    digest: sha256:0f8d0810ee13de24a5fdce6b9ac907d6171e200c17155c27e3aafc63ca6acf6b
     dependencies: {}
     runtime:
       bitwarden-secret-store:
         provider: omusubiya-packages/bitwarden-secret-store
-        version: 1.0.0
+        revision: 1.0.0
         capability: bitwarden-secret-store
         capability_version: 1.0.0
         constraints:
@@ -359,20 +345,20 @@ packages:
         private: false
       cert-manager:
         provider: omusubiya-packages/cert-manager
-        version: 1.0.0
+        revision: 1.0.0
         capability: cert-manager
-        capability_version: 1.0.0
+        capability_version: 1.21.2
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.21.0
           source: package
         private: false
       external-secrets:
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
         private: false
     instance:
@@ -380,10 +366,9 @@ packages:
       kind: root
       scope: letsencrypt-cloudflare
   omusubiya-packages/metrics-server:
-    version: 1.0.0
-    application:
-      version: 0.9.0
-    digest: sha256:34164cae97b5325acb00c7f9945b4638ad2128f621932e617cd81fe3f3bdfbaf
+    version: 0.9.0
+    revision: 1.0.0
+    digest: sha256:97836d624044238848d7d1e03be4d0ec51d5ed20a0a731df509e2ab82bff730e
     dependencies: {}
     runtime: {}
     instance:
@@ -391,24 +376,23 @@ packages:
       kind: root
       scope: metrics-server
   omusubiya-packages/ntfy:
-    version: 1.0.0
-    application:
-      version: 2.15.0
-    digest: sha256:4733ba869c35a3cbe58bc994a235c54192d47698beb3737e073feb86856e7b0b
+    version: 2.15.0
+    revision: 1.0.0
+    digest: sha256:b77557fc442df0c494b00d028d38225cb6af995e87b3a8475a82e5cad72bf0c3
     dependencies: {}
     runtime:
       cert-manager:
         provider: omusubiya-packages/cert-manager
-        version: 1.0.0
+        revision: 1.0.0
         capability: cert-manager
-        capability_version: 1.0.0
+        capability_version: 1.21.2
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.21.0
           source: package
         private: false
       letsencrypt-cloudflare:
         provider: omusubiya-packages/letsencrypt-cloudflare
-        version: 1.0.0
+        revision: 1.0.0
         capability: letsencrypt-cloudflare
         capability_version: 1.0.0
         constraints:
@@ -420,10 +404,9 @@ packages:
       kind: root
       scope: ntfy
   omusubiya-packages/postgresql:
-    version: 1.0.0
-    application:
-      version: '16.15'
-    digest: sha256:9651fc8c8b84378c997f7188a98ca72a929c6f5316737f04b8b19410ecca275d
+    version: '16.15'
+    revision: 1.0.0
+    digest: sha256:6ff05f5f285a629dd6fdc5c40cfff5e030746f94248023daf2f5a1db680c40f4
     dependencies: {}
     runtime: {}
     instance:
@@ -431,19 +414,18 @@ packages:
       kind: root
       scope: postgresql
   omusubiya-packages/postgresql-credentials:
-    version: 1.0.0
-    application:
-      none: true
-    digest: sha256:b2d99e7140a724d58d6629fb8eb15344631ab258d2e6d39bd73fb6a46a52bb3e
+    revision: 1.0.0
+    application: none
+    digest: sha256:e34efe53c74b5931627915aecbb586e078c8afb395c78fc897e4cfa6008191af
     dependencies: {}
     runtime:
       external-secrets:
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
         private: false
     instance:
@@ -458,8 +440,8 @@ instances:
       scope: alloy
     artifact:
       package: omusubiya-packages/alloy
-      version: 1.0.0
-      digest: sha256:568b687a8558c82bcf2e705054e4a1573b3435d7056a4f59d128f6fd52219d09
+      revision: 1.0.0
+      digest: sha256:c4240817ad68b1064c7b916df9f239411484294e120d05754505c69bc857dce2
     runtime: {}
   bifrost:
     id:
@@ -468,31 +450,31 @@ instances:
       scope: bifrost
     artifact:
       package: omusubiya-packages/bifrost
-      version: 1.0.0
-      digest: sha256:6a0a73bad6ebc3309b0147d2f7776a7440ce9c73e2933dc29680026596835316
+      revision: 1.0.0
+      digest: sha256:f2fc7913eb5eed566e1f800d99894fb7d4eca1ab38461d0ccb2cb0f8fdf68509
     runtime:
       external-secrets:
         provider_instance: external-secrets
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
       postgresql:
         provider_instance: postgresql
         provider: omusubiya-packages/postgresql
-        version: 1.0.0
+        revision: 1.0.0
         capability: postgresql
-        capability_version: 1.0.0
+        capability_version: 16.15.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^16
           source: package
       recursive-dns:
         provider_instance: knot-resolver
         provider: omusubiya-packages/knot-resolver
-        version: 1.0.0
+        revision: 1.0.0
         capability: recursive-dns
         capability_version: 1.0.0
         constraints:
@@ -505,26 +487,26 @@ instances:
       scope: bitwarden-sdk-server
     artifact:
       package: omusubiya-packages/bitwarden-sdk-server
-      version: 1.0.0
-      digest: sha256:3998c51b059fdb077314341fb5a6ed2c7a383243c1a1d1cf9e7e3cd8b4cdf5ca
+      revision: 1.0.0
+      digest: sha256:48b364710b65f659b355692a8ccb943bc198ee338b9fcfc8a8df7174b69a71a2
     runtime:
       cert-manager:
         provider_instance: cert-manager
         provider: omusubiya-packages/cert-manager
-        version: 1.0.0
+        revision: 1.0.0
         capability: cert-manager
-        capability_version: 1.0.0
+        capability_version: 1.21.2
         constraints:
         - requirement: '>=1'
           source: package
       external-secrets:
         provider_instance: external-secrets
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
   bitwarden-secret-store:
     id:
@@ -533,26 +515,26 @@ instances:
       scope: bitwarden-secret-store
     artifact:
       package: omusubiya-packages/bitwarden-secret-store
-      version: 1.0.0
-      digest: sha256:811b6cabe52b23601b8583129f54bb160a1870aec460850aacb1a35a739c078f
+      revision: 1.0.0
+      digest: sha256:9fafb66a4eea43f538a33ceb4f8cdeb1af5f3c8166661cd4eb7f306db00ed9b4
     runtime:
       bitwarden-sdk-server:
         provider_instance: bitwarden-sdk-server
         provider: omusubiya-packages/bitwarden-sdk-server
-        version: 1.0.0
+        revision: 1.0.0
         capability: bitwarden-sdk-server
-        capability_version: 1.0.0
+        capability_version: 0.8.1
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^0.8
           source: package
       external-secrets:
         provider_instance: external-secrets
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
   cert-manager:
     id:
@@ -561,8 +543,8 @@ instances:
       scope: cert-manager
     artifact:
       package: omusubiya-packages/cert-manager
-      version: 1.0.0
-      digest: sha256:0cf60da3d60ca8e6c0a8dcb595311c99845a2e90bd9f96a6d5f006bf83e1124c
+      revision: 1.0.0
+      digest: sha256:428c93a057d092f7a36929ecb86a70a0bb05a21b6996ccaec9a20890769be749
     runtime: {}
   chrony:
     id:
@@ -571,8 +553,8 @@ instances:
       scope: chrony
     artifact:
       package: omusubiya-packages/chrony
-      version: 1.0.0
-      digest: sha256:0acbc4f9dcb14f18fb2686ff0e43acdd68004475323a275c9ee9185042f45c65
+      revision: 1.0.0
+      digest: sha256:b09f72fe0dccd891f6ab12e6644b21fdb1b0013d9b5baa6b6e606e89546a8698
     runtime: {}
   cilium-gateways:
     id:
@@ -581,31 +563,31 @@ instances:
       scope: cilium-gateways
     artifact:
       package: omusubiya-packages/cilium-gateways
-      version: 1.0.0
-      digest: sha256:fdcfd788bb9c63bfa9059603cc806440f3e8da9bbb723ffcee5852c358835ca1
+      revision: 1.0.0
+      digest: sha256:81097ebcb090ead1bc5af1edee6acd0a2264292ea6a8ac3bd2bf76d52cedd977
     runtime:
       cert-manager:
         provider_instance: cert-manager
         provider: omusubiya-packages/cert-manager
-        version: 1.0.0
+        revision: 1.0.0
         capability: cert-manager
-        capability_version: 1.0.0
+        capability_version: 1.21.2
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.21.0
           source: package
       gateway-api:
         provider_instance: omusubiya-packages/gateway-api
         provider: omusubiya-packages/gateway-api
-        version: 1.0.0
+        revision: 1.0.0
         capability: gateway-api
-        capability_version: 1.0.0
+        capability_version: 1.6.3
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.6.3
           source: package
       letsencrypt-cloudflare:
         provider_instance: letsencrypt-cloudflare
         provider: omusubiya-packages/letsencrypt-cloudflare
-        version: 1.0.0
+        revision: 1.0.0
         capability: letsencrypt-cloudflare
         capability_version: 1.0.0
         constraints:
@@ -618,8 +600,8 @@ instances:
       scope: external-secrets
     artifact:
       package: omusubiya-packages/external-secrets
-      version: 1.0.0
-      digest: sha256:e2bc516717235390162a0f0f5e11788489f95b9793fbaaccdefc9a572483c92f
+      revision: 1.0.0
+      digest: sha256:0eb8c03ead44e637b15b1d4d11d8122b217b5ea7d67fcdfc6a19b8c4b9585519
     runtime: {}
   immich:
     id:
@@ -628,26 +610,26 @@ instances:
       scope: immich
     artifact:
       package: omusubiya-packages/immich
-      version: 1.0.0
-      digest: sha256:7efab8091e12c3406f968d5a0854986328bf86646234555ea159a40fe52716dc
+      revision: 1.0.0
+      digest: sha256:f03f72726451c07d0569d87c6e4c07f7fa3be57e4ec1527878cec513f25f7c00
     runtime:
       external-secrets:
         provider_instance: external-secrets
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
       gateway-api:
         provider_instance: omusubiya-packages/gateway-api
         provider: omusubiya-packages/gateway-api
-        version: 1.0.0
+        revision: 1.0.0
         capability: gateway-api
-        capability_version: 1.0.0
+        capability_version: 1.6.3
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.6.3
           source: package
   knot-resolver:
     id:
@@ -656,8 +638,8 @@ instances:
       scope: knot-resolver
     artifact:
       package: omusubiya-packages/knot-resolver
-      version: 1.0.0
-      digest: sha256:3b0e70a52129396f7338410a81be8fef610564ff472e0fe273b0b2807030339f
+      revision: 1.0.0
+      digest: sha256:3dea76d9f53324ae2a2ef4b961d49615f1fc98d91cd7c2246d504491fd7d8ade
     runtime: {}
   letsencrypt-cloudflare:
     id:
@@ -666,13 +648,13 @@ instances:
       scope: letsencrypt-cloudflare
     artifact:
       package: omusubiya-packages/letsencrypt-cloudflare
-      version: 1.0.0
-      digest: sha256:3a76fcbe5e18f1131c7fb788bcd9b48bab0b65eaaf58a1aa16d96e4db02f67d5
+      revision: 1.0.0
+      digest: sha256:0f8d0810ee13de24a5fdce6b9ac907d6171e200c17155c27e3aafc63ca6acf6b
     runtime:
       bitwarden-secret-store:
         provider_instance: bitwarden-secret-store
         provider: omusubiya-packages/bitwarden-secret-store
-        version: 1.0.0
+        revision: 1.0.0
         capability: bitwarden-secret-store
         capability_version: 1.0.0
         constraints:
@@ -681,20 +663,20 @@ instances:
       cert-manager:
         provider_instance: cert-manager
         provider: omusubiya-packages/cert-manager
-        version: 1.0.0
+        revision: 1.0.0
         capability: cert-manager
-        capability_version: 1.0.0
+        capability_version: 1.21.2
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.21.0
           source: package
       external-secrets:
         provider_instance: external-secrets
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
   lighthouse:
     id:
@@ -703,31 +685,31 @@ instances:
       scope: lighthouse
     artifact:
       package: lighthouse-packages/lighthouse
-      version: 1.0.0
-      digest: sha256:47b5f54b0d8b9cdb7e246680ac835cadc07e669c8946c08e34aec751e7d13539
+      revision: 1.0.0
+      digest: sha256:0dc142d3de030d92120b34945b1f269bd4b5c95f31a088aecfe62a3b68b8db29
     runtime:
       cert-manager:
         provider_instance: cert-manager
         provider: omusubiya-packages/cert-manager
-        version: 1.0.0
+        revision: 1.0.0
         capability: cert-manager
-        capability_version: 1.0.0
+        capability_version: 1.21.2
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.21.0
           source: package
       external-secrets:
         provider_instance: external-secrets
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
       letsencrypt-cloudflare:
         provider_instance: letsencrypt-cloudflare
         provider: omusubiya-packages/letsencrypt-cloudflare
-        version: 1.0.0
+        revision: 1.0.0
         capability: letsencrypt-cloudflare
         capability_version: 1.0.0
         constraints:
@@ -740,17 +722,17 @@ instances:
       scope: lighthouse-route
     artifact:
       package: omusubiya-packages/gateway-http-route
-      version: 1.0.0
-      digest: sha256:a541aa9224af6f135150ed9aa7ec70e6ea128ea7d53a9d19f0395a002eff831a
+      revision: 1.0.0
+      digest: sha256:92e95669aedeab45835dfa7b54187fcd85691fb4da3f931391ff7b5328e896f1
     runtime:
       gateway-api:
         provider_instance: omusubiya-packages/gateway-api
         provider: omusubiya-packages/gateway-api
-        version: 1.0.0
+        revision: 1.0.0
         capability: gateway-api
-        capability_version: 1.0.0
+        capability_version: 1.6.3
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.6.3
           source: package
   metrics-server:
     id:
@@ -759,8 +741,8 @@ instances:
       scope: metrics-server
     artifact:
       package: omusubiya-packages/metrics-server
-      version: 1.0.0
-      digest: sha256:34164cae97b5325acb00c7f9945b4638ad2128f621932e617cd81fe3f3bdfbaf
+      revision: 1.0.0
+      digest: sha256:97836d624044238848d7d1e03be4d0ec51d5ed20a0a731df509e2ab82bff730e
     runtime: {}
   ntfy:
     id:
@@ -769,22 +751,22 @@ instances:
       scope: ntfy
     artifact:
       package: omusubiya-packages/ntfy
-      version: 1.0.0
-      digest: sha256:4733ba869c35a3cbe58bc994a235c54192d47698beb3737e073feb86856e7b0b
+      revision: 1.0.0
+      digest: sha256:b77557fc442df0c494b00d028d38225cb6af995e87b3a8475a82e5cad72bf0c3
     runtime:
       cert-manager:
         provider_instance: cert-manager
         provider: omusubiya-packages/cert-manager
-        version: 1.0.0
+        revision: 1.0.0
         capability: cert-manager
-        capability_version: 1.0.0
+        capability_version: 1.21.2
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.21.0
           source: package
       letsencrypt-cloudflare:
         provider_instance: letsencrypt-cloudflare
         provider: omusubiya-packages/letsencrypt-cloudflare
-        version: 1.0.0
+        revision: 1.0.0
         capability: letsencrypt-cloudflare
         capability_version: 1.0.0
         constraints:
@@ -797,17 +779,17 @@ instances:
       scope: ntfy-route
     artifact:
       package: omusubiya-packages/gateway-http-route
-      version: 1.0.0
-      digest: sha256:a541aa9224af6f135150ed9aa7ec70e6ea128ea7d53a9d19f0395a002eff831a
+      revision: 1.0.0
+      digest: sha256:92e95669aedeab45835dfa7b54187fcd85691fb4da3f931391ff7b5328e896f1
     runtime:
       gateway-api:
         provider_instance: omusubiya-packages/gateway-api
         provider: omusubiya-packages/gateway-api
-        version: 1.0.0
+        revision: 1.0.0
         capability: gateway-api
-        capability_version: 1.0.0
+        capability_version: 1.6.3
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^1.6.3
           source: package
   omusubiya-packages/gateway-api:
     id:
@@ -815,8 +797,8 @@ instances:
       kind: shared
     artifact:
       package: omusubiya-packages/gateway-api
-      version: 1.0.0
-      digest: sha256:bc0e2ace7e4d606e21ba92379e4ea4ddfef15d688a7acb44c63d0cd01a4745de
+      revision: 1.0.0
+      digest: sha256:135482db81a81f63c2211cfe8ded131ad8f458a09b4f1169c7f3b8cf0c98b9fd
     runtime: {}
   postgresql:
     id:
@@ -825,8 +807,8 @@ instances:
       scope: postgresql
     artifact:
       package: omusubiya-packages/postgresql
-      version: 1.0.0
-      digest: sha256:9651fc8c8b84378c997f7188a98ca72a929c6f5316737f04b8b19410ecca275d
+      revision: 1.0.0
+      digest: sha256:6ff05f5f285a629dd6fdc5c40cfff5e030746f94248023daf2f5a1db680c40f4
     runtime: {}
   postgresql-credentials:
     id:
@@ -835,17 +817,17 @@ instances:
       scope: postgresql-credentials
     artifact:
       package: omusubiya-packages/postgresql-credentials
-      version: 1.0.0
-      digest: sha256:b2d99e7140a724d58d6629fb8eb15344631ab258d2e6d39bd73fb6a46a52bb3e
+      revision: 1.0.0
+      digest: sha256:e34efe53c74b5931627915aecbb586e078c8afb395c78fc897e4cfa6008191af
     runtime:
       external-secrets:
         provider_instance: external-secrets
         provider: omusubiya-packages/external-secrets
-        version: 1.0.0
+        revision: 1.0.0
         capability: external-secrets
-        capability_version: 1.0.0
+        capability_version: 2.12.0
         constraints:
-        - requirement: ^1.0.0
+        - requirement: ^2.12.0
           source: package
 platforms:
   kubernetes:

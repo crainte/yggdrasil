@@ -16,6 +16,8 @@ Root instances set `namespace:`; roots with `createNamespace: true` make Onigiri
 
 ## Locking
 
+Root `version:` constraints name the software each package represents (`cert-manager: ^1.21`, `postgresql: ^16`); packages that represent no independently versioned software (`application: none`: routes, issuers, secret stores, credentials) are constrained by `revision:` instead. `oni.lock` freezes the exact Oni package revision, its version, and its artifact digest, so revision constraints are only added where the project deliberately restricts packaging revisions.
+
 Container image tags declared by packages are pinned to registry digests in `oni.lock` (`images:`). `oni lock` needs registry access only for tags that are not locked yet; `oni check` and `oni render` never contact a registry. Re-resolve a moved tag explicitly with `oni update . --image <reference|all>`.
 
 Packages and Kubernetes schema platforms come from Oni's built-in official repositories (`onigiri` and `kubernetes`), so `oni.yaml` declares no repositories. Their `repository.yaml` manifests provide the durable lock identities `omusubiya-packages` and `onigiri-schema-registry`, independent of transport (`oni repo list` shows the registrations; `oni repo set-remote` redirects them to a mirror). Only explicit resolution (`oni lock`, `oni update`, `oni outdated`) fetches them; `oni render`, `oni check`, and `oni plan` work offline from `oni.lock` and the local immutable artifact store.
