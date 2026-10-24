@@ -1,4 +1,5 @@
-version: 16
+version: 17
+installationId: oni-0210715f9514a2cbdbb99703
 roots:
   alloy:
     package: omusubiya-packages/alloy
@@ -24,18 +25,23 @@ roots:
   external-secrets:
     package: omusubiya-packages/external-secrets
     version: ^2.12
+  grafana:
+    package: omusubiya-packages/grafana
+    version: ^10.4.2
   immich:
     package: omusubiya-packages/immich
     version: ^3.3
   knot-resolver:
     package: omusubiya-packages/knot-resolver
     version: ^6.5
+  lanraragi:
+    package: omusubiya-packages/lanraragi
+    version: ^0.9.60
   letsencrypt-cloudflare:
     package: omusubiya-packages/letsencrypt-cloudflare
     revision: ^1.0
   lighthouse:
     package: lighthouse-packages/lighthouse
-    version: ^0.1
   lighthouse-route:
     package: omusubiya-packages/gateway-http-route
     revision: ^1.0
@@ -54,11 +60,14 @@ roots:
   postgresql-credentials:
     package: omusubiya-packages/postgresql-credentials
     revision: ^1.0
+  reloader:
+    package: omusubiya-packages/reloader
+    version: ^1.4.22
 packages:
   lighthouse-packages/lighthouse:
-    version: 0.1.0
-    revision: 1.0.0
-    digest: sha256:0dc142d3de030d92120b34945b1f269bd4b5c95f31a088aecfe62a3b68b8db29
+    version: 0.2.0
+    revision: 1.1.0
+    digest: sha256:1020afc42293ce9e30c70fee5358088cd6b18fedc0ccd047b2a7f443c7c90e9c
     dependencies: {}
     runtime:
       cert-manager:
@@ -95,7 +104,7 @@ packages:
   omusubiya-packages/alloy:
     version: 1.20.1
     revision: 1.0.0
-    digest: sha256:c4240817ad68b1064c7b916df9f239411484294e120d05754505c69bc857dce2
+    digest: sha256:5f055d7a72ca57365304b7728c0c4743e6907ca74e814be0e920e4deceae9256
     dependencies: {}
     runtime: {}
     instance:
@@ -290,6 +299,25 @@ packages:
       package: omusubiya-packages/gateway-http-route
       kind: root
       scope: lighthouse-route
+  omusubiya-packages/grafana:
+    version: 10.4.2
+    revision: 1.0.0
+    digest: sha256:f0cc25a88895933c65e877fcdbd2581a4e941983b9cec0d4896246f81a0109d9
+    dependencies: {}
+    runtime:
+      gateway-api:
+        provider: omusubiya-packages/gateway-api
+        revision: 1.0.0
+        capability: gateway-api
+        capability_version: 1.6.3
+        constraints:
+        - requirement: ^1.6.3
+          source: package
+        private: false
+    instance:
+      package: omusubiya-packages/grafana
+      kind: root
+      scope: grafana
   omusubiya-packages/immich:
     version: 3.3.3
     revision: 1.0.0
@@ -328,6 +356,25 @@ packages:
       package: omusubiya-packages/knot-resolver
       kind: root
       scope: knot-resolver
+  omusubiya-packages/lanraragi:
+    version: 0.9.60
+    revision: 1.0.0
+    digest: sha256:47e7446798a6a91fd10bae02e48ad29cd2a2f29194f616953056f12781435d5c
+    dependencies: {}
+    runtime:
+      gateway-api:
+        provider: omusubiya-packages/gateway-api
+        revision: 1.0.0
+        capability: gateway-api
+        capability_version: 1.6.3
+        constraints:
+        - requirement: ^1.6.3
+          source: package
+        private: false
+    instance:
+      package: omusubiya-packages/lanraragi
+      kind: root
+      scope: lanraragi
   omusubiya-packages/letsencrypt-cloudflare:
     revision: 1.0.0
     application: none
@@ -432,6 +479,16 @@ packages:
       package: omusubiya-packages/postgresql-credentials
       kind: root
       scope: postgresql-credentials
+  omusubiya-packages/reloader:
+    version: 1.4.22
+    revision: 1.0.0
+    digest: sha256:8a2e28c7cc7f554ab5827739880ea6d10bda37d579d23babb00d38f50125552a
+    dependencies: {}
+    runtime: {}
+    instance:
+      package: omusubiya-packages/reloader
+      kind: root
+      scope: reloader
 instances:
   alloy:
     id:
@@ -441,7 +498,7 @@ instances:
     artifact:
       package: omusubiya-packages/alloy
       revision: 1.0.0
-      digest: sha256:c4240817ad68b1064c7b916df9f239411484294e120d05754505c69bc857dce2
+      digest: sha256:5f055d7a72ca57365304b7728c0c4743e6907ca74e814be0e920e4deceae9256
     runtime: {}
   bifrost:
     id:
@@ -603,6 +660,25 @@ instances:
       revision: 1.0.0
       digest: sha256:0eb8c03ead44e637b15b1d4d11d8122b217b5ea7d67fcdfc6a19b8c4b9585519
     runtime: {}
+  grafana:
+    id:
+      package: omusubiya-packages/grafana
+      kind: root
+      scope: grafana
+    artifact:
+      package: omusubiya-packages/grafana
+      revision: 1.0.0
+      digest: sha256:f0cc25a88895933c65e877fcdbd2581a4e941983b9cec0d4896246f81a0109d9
+    runtime:
+      gateway-api:
+        provider_instance: omusubiya-packages/gateway-api
+        provider: omusubiya-packages/gateway-api
+        revision: 1.0.0
+        capability: gateway-api
+        capability_version: 1.6.3
+        constraints:
+        - requirement: ^1.6.3
+          source: package
   immich:
     id:
       package: omusubiya-packages/immich
@@ -641,6 +717,25 @@ instances:
       revision: 1.0.0
       digest: sha256:3dea76d9f53324ae2a2ef4b961d49615f1fc98d91cd7c2246d504491fd7d8ade
     runtime: {}
+  lanraragi:
+    id:
+      package: omusubiya-packages/lanraragi
+      kind: root
+      scope: lanraragi
+    artifact:
+      package: omusubiya-packages/lanraragi
+      revision: 1.0.0
+      digest: sha256:47e7446798a6a91fd10bae02e48ad29cd2a2f29194f616953056f12781435d5c
+    runtime:
+      gateway-api:
+        provider_instance: omusubiya-packages/gateway-api
+        provider: omusubiya-packages/gateway-api
+        revision: 1.0.0
+        capability: gateway-api
+        capability_version: 1.6.3
+        constraints:
+        - requirement: ^1.6.3
+          source: package
   letsencrypt-cloudflare:
     id:
       package: omusubiya-packages/letsencrypt-cloudflare
@@ -685,8 +780,8 @@ instances:
       scope: lighthouse
     artifact:
       package: lighthouse-packages/lighthouse
-      revision: 1.0.0
-      digest: sha256:0dc142d3de030d92120b34945b1f269bd4b5c95f31a088aecfe62a3b68b8db29
+      revision: 1.1.0
+      digest: sha256:1020afc42293ce9e30c70fee5358088cd6b18fedc0ccd047b2a7f443c7c90e9c
     runtime:
       cert-manager:
         provider_instance: cert-manager
@@ -829,6 +924,16 @@ instances:
         constraints:
         - requirement: ^2.12.0
           source: package
+  reloader:
+    id:
+      package: omusubiya-packages/reloader
+      kind: root
+      scope: reloader
+    artifact:
+      package: omusubiya-packages/reloader
+      revision: 1.0.0
+      digest: sha256:8a2e28c7cc7f554ab5827739880ea6d10bda37d579d23babb00d38f50125552a
+    runtime: {}
 platforms:
   kubernetes:
     '1.36':
@@ -841,9 +946,15 @@ images:
   docker.io/cznic/knot-resolver:v6.5.0:
     digest: sha256:b2422a58c6b6ab863f24f9e80f65677ae45dcbe0ed9474ced8cb32453f5c49e0
     mediaType: application/vnd.oci.image.index.v1+json
+  docker.io/difegue/lanraragi:v.0.9.81:
+    digest: sha256:6376a3de75c8a4045aadeb252eee9661ee9baf27965cec7a405a2b246d2937b3
+    mediaType: application/vnd.oci.image.index.v1+json
   docker.io/grafana/alloy:v1.20.1:
     digest: sha256:2aa2099af76c0098d4af7a4d6e48f86cb66dc1a000222ad927a1c67c6542d13f
     mediaType: application/vnd.oci.image.index.v1+json
+  docker.io/grafana/grafana:10.4.2:
+    digest: sha256:7d5faae481a4c6f436c99e98af11534f7fd5e8d3e35213552dd1dd02bc393d2e
+    mediaType: application/vnd.docker.distribution.manifest.list.v2+json
   docker.io/library/postgres:16.15-bookworm:
     digest: sha256:0ea6700a3b4f0ae6ce746519073558aed4d88a79d8d07622a9a644946c7319c4
     mediaType: application/vnd.oci.image.index.v1+json
@@ -856,8 +967,8 @@ images:
   ghcr.io/crainte/bifrost:0.1.2:
     digest: sha256:eddcb1dc1901e119026487f074d6b1cdfb543c876cc7428dd4aa93fe90e0e68a
     mediaType: application/vnd.oci.image.index.v1+json
-  ghcr.io/crainte/lighthouse:0.1.0:
-    digest: sha256:d72a198eeaaf37b5c0a9cbd63d0750c9256c663d393e89801eb2258d70325909
+  ghcr.io/crainte/lighthouse:0.2.0:
+    digest: sha256:0f494533ff2620a6659bb064bd9508c9af3f9f68edf45fff680e57822c19fe9b
     mediaType: application/vnd.oci.image.index.v1+json
   ghcr.io/external-secrets/bitwarden-sdk-server:v0.8.1:
     digest: sha256:d2266559f57eff819aab5016c565f9e203895850b0d8a1ea8fc340fad34f4a10
@@ -873,6 +984,9 @@ images:
     mediaType: application/vnd.oci.image.index.v1+json
   ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0:
     digest: sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+    mediaType: application/vnd.oci.image.index.v1+json
+  ghcr.io/stakater/reloader:v1.4.22:
+    digest: sha256:def2480040adc164b3a57340e77674eadfd88fb7f0593df25e93297f29c7fd7c
     mediaType: application/vnd.oci.image.index.v1+json
   quay.io/jetstack/cert-manager-acmesolver:v1.21.2:
     digest: sha256:699b40d622211ab7accad8a21b04c5fbaa1841ef7a12621e8de492dbe27b2503
