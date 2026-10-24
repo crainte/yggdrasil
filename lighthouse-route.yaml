@@ -1,5 +1,5 @@
 hostname: lighthouse.itai.moe
-gatewayName: public
+gatewayName: internal
 gatewayNamespace: gateway
 backendName: lighthouse-gateway-backend
 backendPort: 80

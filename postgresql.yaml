@@ -2,3 +2,7 @@ database: bifrost
 user: bifrost
 secretName: postgresql-credentials
 passwordKey: password
+secretStore:
+  name: bitwarden
+  kind: ClusterSecretStore
+passwordRemoteKey: POSTGRES_PASSWORD

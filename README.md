@@ -8,7 +8,7 @@ Packages own Kubernetes desired state; this project selects and configures them.
 
 * `oni.yaml` selects package instances, their namespaces, and their configuration files.
 * Every other YAML file (besides `oni.lock`) configures one selected instance: typed package inputs, plus optional format-2 map-by-name patches of resources the package already declares (`deployments: {knot: {...}}`). Configuration cannot create resources; anything new belongs in a package.
-* Secrets are provisioned by packages, not by loose manifests. Bifrost owns its `ExternalSecret`; `postgresql-credentials` provisions the Secret the generic `postgresql` package consumes (its name and key must match `postgresql.yaml`).
+* Secrets are provisioned by packages, not by loose manifests. Each package that needs a secret owns its `ExternalSecret` (Bifrost, PostgreSQL, Immich, Unpoller) and takes the store and remote key as inputs.
 
 ## Namespaces
 

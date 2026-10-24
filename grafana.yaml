@@ -1,0 +1,5 @@
+hostname: grafana.itai.moe
+rootUrl: https://grafana.itai.moe
+gatewayName: internal
+gatewayNamespace: gateway
+storageSize: 1Gi

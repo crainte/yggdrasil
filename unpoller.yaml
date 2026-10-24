@@ -1,0 +1,4 @@
+secretStore:
+  name: bitwarden
+  kind: ClusterSecretStore
+upConfRemoteKey: UNPOLLER_UP_CONF

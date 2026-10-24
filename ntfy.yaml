@@ -1,5 +1,3 @@
-hostname: ntfy.itai.moe
-clusterIssuer: letsencrypt
 config: |
   base-url: "https://ntfy.itai.moe"
   listen-http: ":8080"

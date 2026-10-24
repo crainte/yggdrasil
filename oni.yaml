@@ -7,6 +7,11 @@ packages:
   metrics-server:
     version: "^0.9"
     namespace: kube-system
+  reloader:
+    version: "1.4.22"
+    namespace: reloader
+    createNamespace: true
+    config: reloader.yaml
   cert-manager:
     version: "^1.21"
     namespace: cert-manager
@@ -30,10 +35,6 @@ packages:
     version: "^0.1"
     namespace: dns
     config: bifrost.yaml
-  postgresql-credentials:
-    revision: "^1.0"
-    namespace: infra
-    config: postgresql-credentials.yaml
   postgresql:
     version: "^16"
     namespace: infra
@@ -48,6 +49,22 @@ packages:
     namespace: monitoring
     createNamespace: true
     config: alloy.yaml
+  grafana:
+    version: "10.4.2"
+    namespace: monitoring
+    config: grafana.yaml
+  smokeping:
+    version: "0.12.0"
+    namespace: monitoring
+    config: smokeping.yaml
+  unpoller:
+    version: "5.7.0"
+    namespace: monitoring
+    config: unpoller.yaml
+  vertical-pod-autoscaler:
+    version: "1.8.1"
+    namespace: kube-system
+    config: vertical-pod-autoscaler.yaml
   chrony:
     version: "^4.8"
     namespace: ntp
@@ -65,15 +82,20 @@ packages:
     config: ntfy.yaml
   lighthouse:
     package: lighthouse-dev/lighthouse
-    version: "^0.1"
     namespace: lighthouse
     createNamespace: true
+    version: "*"
     config: lighthouse.yaml
   immich:
     version: "^3.3"
     namespace: immich
     createNamespace: true
     config: immich.yaml
+  lanraragi:
+    version: "0.9.60"
+    namespace: manga
+    createNamespace: true
+    config: lanraragi.yaml
   ntfy-route:
     package: gateway-http-route
     revision: "^1.0"

@@ -1,0 +1,6 @@
+hostname: manga.itai.moe
+gatewayName: internal
+gatewayNamespace: gateway
+databaseStorageSize: 4Gi
+contentStorageSize: 20Gi
+thumbnailStorageSize: 4Gi
